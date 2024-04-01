@@ -1,0 +1,572 @@
+---
+// tried using Image - not suitable for svg, can't change the fill colour
+// import { Image } from "astro:assets"
+// import dayEightLogo from "../images/day-eight-logo.svg"
+
+// let's use trusty old astro-icon instead
+// don't forget to install it!
+import { Icon } from "astro-icon/components"
+// import the built in Picture component
+// (might be worth investigating astro image tools
+// seems like a more advanced version of the built in stuff
+// with support for blur loading, art-direction etc
+// https://astro-imagetools-docs.vercel.app/en/components/Picture
+import { Picture } from "astro:assets"
+
+import "../styles/reset.css";
+import "../styles/global.css";
+
+// fullscale images for <Picture>
+import graffitiImage from "../assets/images/graffiti-1x1-fullscale.jpg"
+import oceanImage from "../assets/images/ocean-fullscale.jpg"
+import helloImage from "../assets/images/hello-16x9-fullscale.jpg"
+
+// blur looks terrible, and lqip is hardly worth it
+// const graffitiLQIP = `url(/images/graffiti-lqip-blur.jpg)`;
+// const oceanLQIP = `url(/images/ocean-lqip-blur.jpg)`;
+
+
+// try this if you get time
+// https://andrewlock.net/simple-obfuscation-of-email-addresses-using-javascript/
+
+import obfuscateEmail from "../js/obfuscateEmail";
+// don't know much about the second parameter of obfuscateEmail
+// other than it's used to generate a hex key, and in the example it's a 3 digit number
+const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
+
+// lets not create a tag for email links, bc then we need to use set:html
+// and then we need to use :global for the class
+// just use emailObf in any email links
+
+// const emailObfLink = `<a href="#" class="eml-protected">${emailObf}</a>`
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Day Eight - Design | Social | PR</title>
+	</head>
+	<body>
+
+		<main>
+			<section class="hero">
+				<!-- order of formats is important -->
+				<!-- i.e. browser will choose the first format that it can display -->
+				<!-- so formats ['jpeg', 'webp'] will mean that the browser will --> 
+				<!-- choose jpeg, bc it'll be the first <source> that it comes to -->
+
+				<!-- the class that we pass to <Picture> will be applied to the img element inside it -->
+				<!-- that's whiy it's called hero__img  -->
+				<div class="picture-container graffiti"><Picture class="hero__img picture-image" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall"></div>
+
+				<div class="logo-and-strap">
+					
+					<div class="logo-and-strap__logo">
+						<Icon name="day-eight-logo" class="day-eight-logo" aria-hidden="true" />
+						<span class="visually-hidden">Day Eight</span>
+					</div>
+	
+					<h1 class="logo-and-strap__strap">Design <span class="text-accent">|</span> Social <span class="text-accent">|</span> PR</h1>
+
+					<div class="logo-and-strap__more-link">
+						<Icon name="down-arrow" class="down-arrow" aria-hidden="true" />
+						<span class="visually-hidden"><a href="#about-us">Find out more</a></span>
+					</div>
+
+					<a href="#about-us" class="logo-and-strap__invisible-link"></a>
+				
+					
+				</div>
+
+				<div class="picture-container ocean"><Picture class="hero__img picture-image" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above"></div>
+					
+			</section>
+	
+			<section class="about-us" id="about-us">
+				<div>
+					<h2 class="about-us__heading serif">Just good people doing good stuff<span class="text-accent">.</span></h2>
+				</div>
+				
+				<div>
+					<div class="about-us__text">
+						<p>Passion led us here and it has taught us a few valuable lessons along the way.</p>
+						<p>We've been around for a while and learned a lot, but if we had to share just one one thing, 
+							it would be that if you truly care about something, if you immerse yourself in it so that it 
+							begins to feel like you're a part of it, only then can you authentically communicate it to other people 
+							so that they might feel the same.</p>
+						<p>That's why we're brilliant communicators, skilled creatives, imaginative content creators and decent humans. 
+							Because we understand that to be really, really good at something, you have to love it.</p>
+					</div>
+					
+				</div>
+				
+			</section>
+
+			<section class="contact">
+				<div>
+					<!-- need another div here to keep the heading and email -->
+					<!-- aligned right, but centred within outer container -->
+					<div class="contact__content">
+						<h2 class="contact__heading">Say hello<span class="text-accent2">.</span></h2>
+
+						<!-- <span class="contact__email-span" set:html={emailObfLink} /> -->
+						<!-- add class hidden to hide the text until it's been decoded -->
+						<a href="#" class="eml-protected contact__email hidden flex-centred">{emailObf}</a>
+					</div>
+					
+					
+				</div>
+
+				<div class="picture-container hello">
+					<Picture class="contact__img picture-image" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy">
+				</div>
+
+				<div class="contact__social-links">
+					<ul class="contact__social-links-list unstyled-list">
+						<li><a href="#"><Icon name="social/linkedin-icon" class="social-icon" /></a></li>
+						<li><a href="#"><Icon name="social/insta-icon" class="social-icon" /></a></li>
+						<li><a href="#"><Icon name="social/x-icon" class="social-icon" /></a></li>
+					</ul>
+				</div>
+			</section>
+		</main>
+		
+
+	</body>
+
+	<script src="/src/js/decodeEmail.js"></script>
+
+	<script>
+		// hide the picture images until they've loaded
+		// and set event listeners for their load events
+		const pictureImages: NodeListOf<HTMLImageElement> = document.querySelectorAll('.picture-image');
+		// console.log(pictureImages)
+
+		for (const pictureImage of pictureImages) {
+			pictureImage.classList.add('picture-image--hide');
+			loadImage(pictureImage);
+		}
+
+		function loadImage(img: HTMLImageElement) {
+			//  check complete and naturalWidth first
+			//  if either .complete or naturalWidth is false, assume the image is not yet loaded
+			if ((img?.complete && img.naturalWidth)) {
+				img.classList.add("picture-image--show");
+				// console.log("image already loaded")
+				return;
+			}
+			// otherwise add the eventlistener with
+			// a callback that adds the --show class
+			// and removes the --hide class
+			img.addEventListener("load", () => {
+				img.classList.remove('picture-image--hide');
+				img.classList.add("picture-image--show");
+				console.log("image loaded!");
+			})
+		}
+	</script>
+
+	<style>
+
+		/* temporarily set bgcolor to lime */
+		body {
+			/* background-color: #C5D65B; */
+		}
+
+		main {
+			/* width: 100vw; */
+		}
+
+		.hero {
+
+			display: flex;
+			/* direction column for mobile */
+			flex-direction: column;
+			/* width: 100%; */
+			/* min-height: 100vh; */
+			/* height: 100vh; */
+
+			background-color: hsl(var(--lime));
+		}
+
+		/* hide the pictures on mobile */
+		.hero__img, .contact__img {
+			display: none;
+		}
+		
+
+		/* desktop / laptop */
+		@media (min-width: 700px) {
+			.hero {
+				flex-direction: row;
+				min-height 100vh;
+			}
+
+			.hero > * {
+				/* we want each child to try to take up maximum space, that way they'll shrink uniformly */
+				flex-grow: 0;
+				flex-shrink: 1;
+				flex-basis: 100%;
+				/* border: 1px solid fuchsia; */
+				/* display: initial; */
+			}
+
+			.hero > :first-child(), .hero > :last-child() {
+				display: block;
+			}
+
+			.hero__img {
+				display: initial;
+				width: 100%;
+				height: 100%;
+				/* border: 2px solid firebrick; */
+				object-fit: cover;
+			}
+
+			.picture-container {
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+
+			.picture-image {
+				transition: opacity 250ms ease-in;
+			}
+
+			/* hide pictures while loading */
+			.picture-image--hide {
+				opacity: 0;
+			}
+
+			.picture-image--show {
+				opacity: 1;
+			}
+
+			/* these classes are now on the container divs, not the picture element  */
+			.graffiti {
+				background-color: hsl(var(--accent));
+				/* we have to set background images this way
+				(for some reason we can't use url() - it errors, possibly a bug)
+				(the urls are set in the frontmatter and made available with <style define:vars)) 
+				it's either this or put them in an is:global style tag */
+				/* background-image: var(--graffitiLQIP); */
+			}
+
+			.ocean {
+				background-color: hsl(var(--accent3));
+				/* background-image: var(--oceanLQIP); */
+			}
+			
+		}
+
+		.logo-and-strap {
+			display: flex;
+			flex-direction: column;
+			/* no gap because of the more-link, which counts as a flex item */
+			/* gap: 4rem; */
+			justify-content: center;
+			align-items: center;
+			/* padding: 5rem 0 4rem 0; */
+			padding: 5rem 0;
+			/* background-color: aqua; */
+
+			/* position here so we can position the more-link absolutely */
+			position: relative;
+
+			/* border: 1px solid fuchsia; */
+		}
+
+		.day-eight-logo {
+			color: white;
+			/* astro-icons 1.1 now uses font-size instead of width/height */
+			font-size: 10rem;
+			padding: 0 1rem;
+		}
+
+		.logo-and-strap__strap {
+			color: hsl(var(--text-dark));
+			font-weight: normal;
+			word-spacing: 0.3rem;
+			width: max-content;
+			/* bc of the max-content, we need to make the 
+			font-smaller on mobile */
+			font-size: 1rem;
+			/* padding-top now, instead of gap */
+			padding-top: 4rem;
+
+			/* border: 1px solid blueviolet; */
+		}
+
+		/* more link not required on mobile
+		this div includes the down arrow */
+		.logo-and-strap__more-link {
+			display: none;
+		}
+		
+
+		/* we only really need the down arrow on desktop */
+		@media (min-width: 700px) {
+
+			.logo-and-strap {
+				/* padding: 4rem 0; */
+				/* don't need padding because hero has height in desktop */
+				/* and flex will justify-content center */
+				/* it's not doing any harm but it's easier to see what's 
+				happening without it */
+				padding: 0;
+			}
+
+			.logo-and-strap__strap {
+				font-size: 1.2rem;
+				padding-left: 3rem;
+				padding-right: 3rem;
+				/* padding-top is set above (mobile) */
+				/* padding: 0 3rem; */
+				/* font-size: initial; */
+			}
+
+			.logo-and-strap__more-link {
+				display: block;
+				/* border: 1px solid tomato; */
+				position: absolute;
+				bottom: 2rem;
+				margin: 0 auto;
+				/* left: 50%;
+				transform: translateX(-50%); */
+			}
+
+			.down-arrow {
+				/* display: block; */
+				/* astro-icons 1.1 now uses font-size instead of width/height */
+				font-size: 2rem;
+				color: hsl(var(--white)/0.75);
+				opacity: 0;
+				transition: opacity 250ms ease-in;
+			}
+
+			.logo-and-strap:is(:hover, :focus-visible) .down-arrow {
+				opacity: 1;
+			}
+
+			/* this isn't working properly, presumably because of the invisible link */
+			.down-arrow:is(:hover, :focus-visible) {
+				color: hsl(var(--accent));
+				outline: none;
+			}
+
+			.logo-and-strap__invisible-link {
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				/* border: 1px solid hotpink; */
+				opacity: 0;
+				z-index: 100;
+			}
+
+			/* do we need a hover focus for the invisble link? */
+		}
+
+		.about-us {
+			color: hsl(var(--white));
+			background-color: hsl(var(--navy));
+		}
+
+		.about-us > * {
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 3rem;
+			/* border: 1px solid lightcoral; */
+		}
+
+		.about-us > :first-child() {
+			padding: 4rem 3rem;
+			padding: 4rem 3rem 0 3rem;
+			/* padding top but not bottom for mobile
+			because it stacks, the following div's top padding 
+			will take care of it */
+		}
+
+		.about-us > :last-child() {
+			padding: 4rem 3rem;
+			/* remember that the about-us__text has got max-width in ch 
+			so it'll look like there's more horizontal padding on 
+			wider screens */
+
+			/* NB better to set a min-height on about-us section
+			than trying to do it with vertical padding - see media 
+			query below */
+			/* keep a bit just for tidiness */
+		}
+
+		.about-us__heading {
+			font-size: 2.5rem;
+			font-weight: normal;
+			line-height: 1;
+			max-width: 16ch;
+			text-wrap: balance;
+			/* border: 1px solid slateblue; */
+		}
+
+		.about-us__text {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+			padding: 0;
+			max-width: 52ch;
+		}
+
+		@media (min-width: 700px) {
+			.about-us { 
+				display: flex;
+				min-height: 35rem;
+			}	
+
+			.about-us > * {
+				flex-grow: 0;
+				flex-shrink: 1;
+				flex-basis: 50%;
+			}
+
+			/* need higher specificity than > * to override the padding rule */
+			.about-us > :first-child() {
+				padding: 0 3rem;
+			}
+
+			.about-us__heading {
+				font-size: 4rem;
+				/* border: 1px solid slateblue; */
+			}
+
+			.about-us__text {
+				/* padding: 4rem 0; */
+				max-width: 52ch;
+			}
+		}
+
+		.contact {
+			background-color: hsl(var(--white));
+		}
+
+		.contact > * {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.contact > :first-child() {
+			padding: 3rem 3rem;
+			/* border: 1px solid darkcyan; */
+		}
+
+		.contact__heading {
+			color: hsl(var(--accent));
+			font-weight: normal;
+			font-size: 3rem;
+			letter-spacing: 0.05rem;
+			/* it wraps at smaller screen size (<400) 
+			so we need smaller line-height */
+			/* line-height: 1.1; */
+			/* less line-height means we need a bit of bottom margin */
+			/* margin-bottom: 0.8rem; */
+			/* nah just reduce the font-size */
+		}
+
+		.contact__email {
+			padding: 0.5rem 1.5rem;
+			background-color: hsl(var(--accent3));
+			color: hsl(var(--text-light));
+			text-decoration: none;
+			/* problem with max-content is that before the script runs 
+			the content is a big long string of random characters! 
+			this causes a layout shift, so probably best go with 
+			max-width in characters */
+			/* width: max-content; */
+			width: 28ch;
+			/* bc of the max-content, we need to make the 
+			font-smaller on mobile (browser default seems to be 1.5rem?) */
+			/* which isn't the same as initial, why not? investigate! */
+			font-size: 0.9rem;
+		}
+
+		.contact__email:is(:hover, :focus-visible) {
+			background-color: hsl(var(--accent));
+			outline: none;
+		}
+
+		.contact__social-links {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 1.5rem 0;
+			background-color: hsl(var(--accent2));
+		}
+
+		.contact__social-links-list {
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			gap: 0.8rem;
+			/* border: 1px solid darkorange; */
+		}
+
+		.social-icon {
+			font-size: 2rem;
+			transition: transform 125ms ease-in;
+		}
+
+		.social-icon:hover {
+			transform: scale(1.2);
+		}
+
+		/* contact flex stuff for desktop only */
+		@media (min-width: 700px) {
+
+			.contact {
+				display: flex;
+				/* default flex-wrap is nowrap!!! */
+				flex-wrap: wrap;
+				width: 100%;
+				background-color: hsl(var(--white));
+				/* border: 3px solid magenta; */
+			}
+			/* set flex values for the first 2 children */
+			/* (the 2 50% columns, not the social links footer) */
+			.contact > :not(:last-child) {
+				flex: 0 1 50%;
+				padding: 0;
+			}
+
+			.contact__heading {
+				font-size: 4rem;
+			}
+
+			.contact__img {
+				display: initial;
+			}
+
+			.hello {
+				background-color: hsl(var(--accent4));
+				/* background-image: url('/images/hello-lqip.jpg'); */
+			}
+
+			.contact__email {
+				font-size: 1rem;
+			}
+
+			.contact__social-links {
+				flex: 1 0 100%;
+			}
+		}
+		
+	</style>
+</html>

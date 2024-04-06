@@ -24,36 +24,30 @@ html {
 	--darknavy: 186 40% 15%;
 	--white: 0 0% 100%;
 
+	/* darker teal for accessible contrast */
+	/* --darkteal: 182 68% 23%; */
+	--darkteal: 182 68% 30%;
+
 	/* applied colours */
 	--text-light: var(--white);
 	--text-dark: var(--darknavy);
+	--background-light: var(--lime);
+	--background-dark: var(--navy);
 	--accent: var(--darklavender);
 	--accent2: var(--lime);
 	--accent3: var(--teal);
 	--accent4: var(--orchid);
+	--accent3-dark: var(--darkteal);
 }
 
 /* ---------------- @fontface stuff ------------------- */
 
 @font-face {
-	font-family: "Libre Baskerville";
-	src: url("/fonts/librebaskerville-regular-webfont.woff2") format("woff2"),
-		url("/fonts/librebaskerville-regular-webfont.woff") format("woff");
+	font-family: "Butler";
+	src: url("/fonts/butler_regular-webfont.woff2") format("woff2"),
+		url("/fonts/butler_regular-webfont.woff") format("woff");
 	font-weight: normal;
 	font-style: normal;
-	/* font-display: swap; */
-	/* trying font-display block to stop chrome doing the slow network intervention font-swap */
-	/* see: https://stackoverflow.com/questions/40143098/why-does-this-slow-network-detected-log-appear-in-chrome */
-	/* nah - block just makes it disappear intead of swapping to times */
-	/* try optional - nope this swaps it for times and never unswaps! */
-
-	/* It seems that this font flashing issue is due to chrome detecting a slow network */
-	/* i.e. when throttling with devtools */
-	/* and so hopefully it won't occur out in the wild */
-	/* also, it only occurs when google map api is present */
-
-	/* maybe font-display: block might be the lesser of two evils */
-
 	font-display: swap;
 }
 
@@ -131,9 +125,19 @@ stolen from https://gist.github.com/ffoodd/000b59f431e3e64e4ce1a24d5bb36034 */
 /* everytime we decide to change the font */
 
 .serif {
-	font-family: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif;
+	/* font-family: "Butler", "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif; */
+	/* try Antique font stack to be closer to Butler */
+	font-family: "Butler", Superclarendon, "Bookman Old Style", "URW Bookman", "URW Bookman L", "Georgia Pro", Georgia,
+		serif;
 	font-weight: normal;
 }
+
+/* see here to provide different styles for loaded font and fallback font: */
+/* https://css-tricks.com/how-to-load-fonts-in-a-way-that-fights-fout-and-makes-lighthouse-happy/ */
+
+/* the problem is we have several fallback fonts, so ideally we'd need styles for
+all of them, which means we'd need to check for each fallback font
+it's doable, but difficult to test */
 
 .flex {
 	display: flex;

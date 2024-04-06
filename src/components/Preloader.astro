@@ -1,0 +1,111 @@
+---
+// import { Icon } from "astro-icon";
+---
+
+<div class="loader">
+	
+</div>
+
+<script>
+
+    // if there ISN'T a sessionstorage or localstorage item 'preloadComplete'
+
+    // 1. show the loader
+    // 2. do any checks, event listeners, promises etc that we need to make sure it's
+    // safe to show content
+    // (everything but the loader has already been hidden by an inline style)
+    // 3. when those checks are done, promises fulfilled etc
+    // - hide the loader
+    // - show the rest of the content
+    // 4. set the sessionstorage or local storage item
+
+    // else
+
+    // 1. remove the loader
+    // 2. show the rest of the content
+
+
+
+	// ------------------- refs ------------------------------------------------------
+
+	// first get a reference to the preLoader element
+	// this will be passed into the functions
+	const preLoader: HTMLElement = document.querySelector(".loader") as HTMLElement;
+
+
+    // ------------------- functions -------------------------------------------------
+
+    function showLoader(loader: HTMLElement) {
+		// only add the loader--loading class if we need the loader
+		// because that class adds the transition, and we don't
+		// want the transition happening every time a new page loads
+
+		// loader--loading also adds the spinning circle animation, using ::after
+		loader.classList.add("loader--loading");
+
+		// also add a class to the body to prevent scrolling while loader is showing
+		document.body.classList.add("loader-showing");
+		console.log(`loader showing, preloadComplete: ${sessionStorage.getItem("preloadComplete")}`);
+	}
+
+	function hideLoader(loader: HTMLElement) {
+		loader.remove();
+		console.log(`loader removed, preloadComplete: ${sessionStorage.getItem("preloadComplete")}`);
+	}
+
+	console.log("preloader running");
+
+	// sessionStorage preloadComplete is set by handleWindowLoad function (above)
+	if (!sessionStorage.getItem("preloadComplete")) {
+        showLoader(preLoader)
+	} else {
+        hideLoader(preLoader)
+    }
+</script>
+
+<style>
+	/* to disable scrolling while loader is showing */
+	body.loader-showing {
+		/* height: 100vh; */
+		/* overflow-y: hidden; */
+		position: fixed;
+		/* this is width for horizontal writing-mode */
+		inline-size: 100%;
+		overflow-y: scroll;
+	}
+
+	body.loader-hidden {
+		/* static is the default position for body */
+		position: static;
+		overflow-y: auto;
+	}
+
+	.loader {
+		position: fixed;
+		z-index: 9999;
+		inset: 0;
+		/* background-color not here, on loader--loading instead, otherwise it covers the page in blue briefly everytime */
+		/* background-color: var(--accent); */
+		/* border: 1px solid hotpink; */
+		color: hsl(var(--white));
+		width: 100vw;
+		height: 100vh;
+		align-items: center;
+		justify-content: center;
+		display: flex;
+
+		/* set it hidden as default so it doesn't interfere with links / buttons while the script is loading */
+		/* let --loading set it to visible, --loading adds the background anyway... */
+
+		visibility: hidden;
+
+		/* definitively this (visibility: hidden) is NOT the cause of the fouc in firefox */
+		/* (fixed the fouc with an inline visibility: hidden rule for .content-wrapper) */
+	}
+
+
+
+
+
+
+</style>

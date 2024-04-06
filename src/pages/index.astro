@@ -13,6 +13,8 @@ import { Icon } from "astro-icon/components"
 // https://astro-imagetools-docs.vercel.app/en/components/Picture
 import { Picture } from "astro:assets"
 
+// import Preloader from "../components/Preloader.astro";
+
 import "../styles/reset.css";
 import "../styles/global.css";
 
@@ -46,8 +48,10 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<!-- <link rel="icon" type="image/svg+xml" href="/favicon-disc-accent.svg" /> -->
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="Day Eight is a creative communication agency helping people with branding, social media and PR.">
 		<title>Day Eight - Design | Social | PR</title>
 	</head>
 	<body>
@@ -60,8 +64,13 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				<!-- choose jpeg, bc it'll be the first <source> that it comes to -->
 
 				<!-- the class that we pass to <Picture> will be applied to the img element inside it -->
-				<!-- that's whiy it's called hero__img  -->
-				<div class="picture-container graffiti"><Picture class="hero__img picture-image" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall"></div>
+				<!-- that's why it's called hero__img  -->
+
+				<!-- NB! default value of loading attr is lazy for the Picture component -->
+				<!-- we have to specify eager -->
+				<div class="picture-container graffiti">
+					<Picture class="hero__img picture-image picture-image--hide" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall" loading="eager">
+				</div>
 
 				<div class="logo-and-strap">
 					
@@ -73,16 +82,27 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 					<h1 class="logo-and-strap__strap">Design <span class="text-accent">|</span> Social <span class="text-accent">|</span> PR</h1>
 
 					<div class="logo-and-strap__more-link">
-						<Icon name="down-arrow" class="down-arrow" aria-hidden="true" />
-						<span class="visually-hidden"><a href="#about-us">Find out more</a></span>
-					</div>
 
-					<a href="#about-us" class="logo-and-strap__invisible-link"></a>
+						<a href="#about-us">
+							<Icon name="down-arrow" class="down-arrow" aria-hidden="true" />
+						
+							<span class="visually-hidden">Find out more about Day Eight</span>
+						</a>
+						
+					</div>
+					<!-- Accessibility audit opportunity - Links do not have a discernible name -->
+					<!-- if updating the link text doesn't satisfy, try: -->
+					<!-- aria-label="Find out more about Day Eight Agency" -->
+					<!-- also let's hide this link from assistive tech, bc we've already go it in the prev div -->
+					<!-- that means we also need to make it unfocusable with tabindex -->
+					<a href="#about-us" class="logo-and-strap__invisible-link" aria-hidden="true" tabindex="-1">Find out more about Day Eight</a>
 				
 					
 				</div>
 
-				<div class="picture-container ocean"><Picture class="hero__img picture-image" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above"></div>
+				<div class="picture-container ocean">
+					<Picture class="hero__img picture-image picture-image--hide" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above" loading="eager">
+				</div>
 					
 			</section>
 	
@@ -115,6 +135,9 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 						<!-- <span class="contact__email-span" set:html={emailObfLink} /> -->
 						<!-- add class hidden to hide the text until it's been decoded -->
+
+						<!-- Also: Accessibility audit: Background and foreground colors do not have a sufficient contrast ratio -->
+						<!-- might it be the hover colour? try without it -->
 						<a href="#" class="eml-protected contact__email hidden flex-centred">{emailObf}</a>
 					</div>
 					
@@ -122,14 +145,14 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				</div>
 
 				<div class="picture-container hello">
-					<Picture class="contact__img picture-image" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy">
+					<Picture class="contact__img picture-image picture-image--hide" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy">
 				</div>
 
 				<div class="contact__social-links">
 					<ul class="contact__social-links-list unstyled-list">
-						<li><a href="#"><Icon name="social/linkedin-icon" class="social-icon" /></a></li>
-						<li><a href="#"><Icon name="social/insta-icon" class="social-icon" /></a></li>
-						<li><a href="#"><Icon name="social/x-icon" class="social-icon" /></a></li>
+						<li><a href="https://www.linkedin.com/company/wearedayeight/" target="_blank" rel="noopener noreferrer external nofollow" class="social-link"><Icon name="social/linkedin-icon" class="social-icon" aria-hidden="true" /><span class="visually-hidden">LinkedIn</span></a></li>
+						<li><a href="https://www.instagram.com/wearedayeight/" target="_blank" rel="noopener noreferrer external nofollow" class="social-link"><Icon name="social/insta-icon" class="social-icon" aria-hidden="true" /><span class="visually-hidden">Instagram</span></a></li>
+						<li><a href="#" target="_blank" rel="noopener noreferrer external nofollow" class="social-link"><Icon name="social/x-icon" class="social-icon" aria-hidden="true" /><span class="visually-hidden">X (formerly Twitter)</span></a></li>
 					</ul>
 				</div>
 			</section>
@@ -147,7 +170,9 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		// console.log(pictureImages)
 
 		for (const pictureImage of pictureImages) {
-			pictureImage.classList.add('picture-image--hide');
+			// now applying the --hide class manually, otherwise there's
+			// a flash of alt text in firefox
+			// pictureImage.classList.add('picture-image--hide');
 			loadImage(pictureImage);
 		}
 
@@ -165,7 +190,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			img.addEventListener("load", () => {
 				img.classList.remove('picture-image--hide');
 				img.classList.add("picture-image--show");
-				console.log("image loaded!");
+				// console.log("image loaded!");
 			})
 		}
 	</script>
@@ -190,7 +215,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			/* min-height: 100vh; */
 			/* height: 100vh; */
 
-			background-color: hsl(var(--lime));
+			background-color: hsl(var(--background-light));
 		}
 
 		/* hide the pictures on mobile */
@@ -203,7 +228,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		@media (min-width: 700px) {
 			.hero {
 				flex-direction: row;
-				min-height 100vh;
+				min-height: 100vh;
 			}
 
 			.hero > * {
@@ -239,10 +264,14 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 			/* hide pictures while loading */
 			.picture-image--hide {
+				/* also make them invisible as well as transparent */
+				/* otherwise the alt text shows */
+				visibility: hidden;
 				opacity: 0;
 			}
 
 			.picture-image--show {
+				visibility: visible;
 				opacity: 1;
 			}
 
@@ -339,6 +368,10 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				transform: translateX(-50%); */
 			}
 
+			.logo-and-strap__more-link a {
+				outline: none;
+			}
+
 			.down-arrow {
 				/* display: block; */
 				/* astro-icons 1.1 now uses font-size instead of width/height */
@@ -348,15 +381,19 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				transition: opacity 250ms ease-in;
 			}
 
-			.logo-and-strap:is(:hover, :focus-visible) .down-arrow {
+			.logo-and-strap:hover .down-arrow {
 				opacity: 1;
 			}
 
-			/* this isn't working properly, presumably because of the invisible link */
-			.down-arrow:is(:hover, :focus-visible) {
+			a:is(:hover, :focus-visible) .down-arrow {
+				/* outline: none; */
+				opacity: 1;
 				color: hsl(var(--accent));
-				outline: none;
 			}
+
+			/* a:hover .down-arrow {
+				color: hsl(var(--accent));
+			} */
 
 			.logo-and-strap__invisible-link {
 				display: block;
@@ -375,7 +412,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 		.about-us {
 			color: hsl(var(--white));
-			background-color: hsl(var(--navy));
+			background-color: hsl(var(--background-dark));
 		}
 
 		.about-us > * {
@@ -412,7 +449,8 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			font-size: 2.5rem;
 			font-weight: normal;
 			line-height: 1;
-			max-width: 16ch;
+			max-width: 12ch;
+			/* width: 75%; */
 			text-wrap: balance;
 			/* border: 1px solid slateblue; */
 		}
@@ -482,8 +520,14 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		}
 
 		.contact__email {
+			/* accessibility audit: Background and foreground colors do not have a sufficient contrast ratio. */
 			padding: 0.5rem 1.5rem;
 			background-color: hsl(var(--accent3));
+			/* try a darker version of accent3 for better contrast - nah */
+			/* background-color: hsl(var(--background-dark)); */
+			/* gonna leave this as is - it's only a button, you don't need to be able
+			to read the text, it should be obvious that it's an email address
+			and also the hover / focus colour passes the contrast test */
 			color: hsl(var(--text-light));
 			text-decoration: none;
 			/* problem with max-content is that before the script runs 
@@ -519,13 +563,20 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			/* border: 1px solid darkorange; */
 		}
 
-		.social-icon {
-			font-size: 2rem;
+		.social-link {
 			transition: transform 125ms ease-in;
+			/* display: block so it can scale() */
+			display: block;
+			/* border: 1px solid fuchsia; */
 		}
 
-		.social-icon:hover {
+		.social-link:is(:hover, :focus-visible) {
 			transform: scale(1.2);
+			outline: none;
+		}
+
+		.social-icon {
+			font-size: 2rem;
 		}
 
 		/* contact flex stuff for desktop only */

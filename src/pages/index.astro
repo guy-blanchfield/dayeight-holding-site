@@ -27,6 +27,10 @@ import helloImage from "../assets/images/hello-16x9-fullscale.jpg"
 // const graffitiLQIP = `url(/images/graffiti-lqip-blur.jpg)`;
 // const oceanLQIP = `url(/images/ocean-lqip-blur.jpg)`;
 
+// think bg image paths have to be passed into <style> as variables
+const graffitiBgImage = 'url(/images/graffiti-810x810.jpg)';
+const oceanBgImage = 'url(/images/ocean-810x810.jpg)';
+
 
 // try this if you get time
 // https://andrewlock.net/simple-obfuscation-of-email-addresses-using-javascript/
@@ -90,11 +94,9 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 						</a>
 						
 					</div>
-					<!-- Accessibility audit opportunity - Links do not have a discernible name -->
-					<!-- if updating the link text doesn't satisfy, try: -->
-					<!-- aria-label="Find out more about Day Eight Agency" -->
-					<!-- also let's hide this link from assistive tech, bc we've already go it in the prev div -->
-					<!-- that means we also need to make it unfocusable with tabindex -->
+					
+					<!-- Let's hide this link from assistive tech, bc we've already got it in the prev div -->
+					<!-- that means we also need to make it unfocusable with tabindex -1 -->
 					<a href="#about-us" class="logo-and-strap__invisible-link" aria-hidden="true" tabindex="-1">Find out more about Day Eight</a>
 				
 					
@@ -138,7 +140,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 						<!-- Also: Accessibility audit: Background and foreground colors do not have a sufficient contrast ratio -->
 						<!-- might it be the hover colour? try without it -->
-						<a href="#" class="eml-protected contact__email hidden flex-centred">{emailObf}</a>
+						<a href={`mailto:${emailObf}`} class="eml-protected contact__email hidden flex-centred">{emailObf}</a>
 					</div>
 					
 					
@@ -195,11 +197,33 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		}
 	</script>
 
-	<style>
+	<style define:vars={{graffitiBgImage, oceanBgImage}}>
 
 		/* temporarily set bgcolor to lime */
 		body {
 			/* background-color: #C5D65B; */
+
+  			/* background-image: var(--graffitiBgImage), var(--oceanBgImage);
+  			background-position: center top, center bottom;
+  			background-repeat: no-repeat, no-repeat;
+			background-attachment: fixed, fixed;
+			background-size: contain, contain; */
+
+			background-image: var(--graffitiBgImage);
+  			background-position: center top;
+  			background-repeat: repeat;
+			background-attachment: fixed;
+			background-size: contain;
+			background-size: auto 100%;
+
+			padding-top: 10rem;
+		}
+
+		@media(min-width: 700px) {
+			body {
+				background-image: none;
+				padding-top: 0;
+			}
 		}
 
 		main {
@@ -332,7 +356,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 		/* more link not required on mobile
 		this div includes the down arrow */
-		.logo-and-strap__more-link {
+		.logo-and-strap__more-link, .logo-and-strap__invisible-link {
 			display: none;
 		}
 		
@@ -413,6 +437,9 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		.about-us {
 			color: hsl(var(--white));
 			background-color: hsl(var(--background-dark));
+
+			/* margin-bottom so some of the bg image shows through */
+			margin-bottom: 10rem;
 		}
 
 		.about-us > * {
@@ -467,6 +494,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			.about-us { 
 				display: flex;
 				min-height: 35rem;
+				margin-bottom: 0;
 			}	
 
 			.about-us > * {

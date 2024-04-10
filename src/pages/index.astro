@@ -28,7 +28,7 @@ import helloImage from "../assets/images/hello-16x9-fullscale.jpg"
 // const oceanLQIP = `url(/images/ocean-lqip-blur.jpg)`;
 
 // think bg image paths have to be passed into <style> as variables
-const graffitiBgImage = 'url(/images/graffiti-810x810.jpg)';
+const graffitiBgImage = 'url(/images/graffiti-700.jpg)';
 const oceanBgImage = 'url(/images/ocean-810x810.jpg)';
 
 
@@ -210,11 +210,14 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			background-size: contain, contain; */
 
 			background-image: var(--graffitiBgImage);
-  			background-position: center top;
+  			background-position: left top;
   			background-repeat: repeat;
 			background-attachment: fixed;
 			background-size: contain;
 			background-size: auto 100%;
+
+			/* lets have a bg color so it doesn't look shit while the image is loading */
+			background-color: hsl(var(--accent));
 
 			padding-top: 10rem;
 		}

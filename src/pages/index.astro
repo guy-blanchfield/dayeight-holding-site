@@ -60,6 +60,9 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 	</head>
 	<body>
 
+		<!-- sibling div to main for the background image, 
+		instead of background-attachment: fixed -->
+		<div class="mobile-background"></div>
 		<main>
 			<section class="hero">
 				<!-- order of formats is important -->
@@ -209,17 +212,22 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			background-attachment: fixed, fixed;
 			background-size: contain, contain; */
 
-			background-image: var(--graffitiBgImage);
+			/* background-image: var(--graffitiBgImage);
   			background-position: left top;
-  			background-repeat: repeat;
-			background-attachment: fixed;
+  			background-repeat: repeat; */
+
+			/* this is problematic for iOS and some mobile browsers */
+			/* @supports (-webkit-overflow-scrolling: touch) might work as a check for it */
+			/* other possible options here: https://stackoverflow.com/questions/14115080/detect-support-for-background-attachment-fixed */
+			
+			/* background-attachment: fixed;
 			background-size: contain;
-			background-size: auto 100%;
+			background-size: auto 100%; */
 
 			/* lets have a bg color so it doesn't look shit while the image is loading */
-			background-color: hsl(var(--accent));
+			/* background-color: hsl(var(--accent)); */
 
-			padding-top: 10rem;
+			/* padding-top: 10rem; */
 		}
 
 		@media(min-width: 700px) {
@@ -229,8 +237,42 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			}
 		}
 
+		/* put a pseudo before main where the background image goes (for mobile) 
+		because background-attachment: fixed won't work on iOS */
+		main::before {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			/* border: 1px solid fuchsia; */
+			background-image: var(--graffitiBgImage);
+  			background-position: left top;
+  			background-repeat: repeat;
+			/* background-size: contain; */
+			background-size: auto 100%;
+			/* lets have a bg color so it doesn't look shit while the image is loading */
+			background-color: hsl(var(--accent));
+			z-index: -1;
+		}
+
+		@media (min-width: 700px) {
+			.main::before {
+				content: none;
+			}
+		}
+
 		main {
-			/* width: 100vw; */
+			/* position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border: 1px solid yellow; */
+			
+			/* position: relative; */
+			z-index: 1;
 		}
 
 		.hero {
@@ -243,6 +285,9 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			/* height: 100vh; */
 
 			background-color: hsl(var(--background-light));
+
+			/* margin-bottom so some of the bg image shows through */
+			margin-bottom: 5rem;
 		}
 
 		/* hide the pictures on mobile */
@@ -256,6 +301,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			.hero {
 				flex-direction: row;
 				min-height: 100vh;
+				margin-bottom: 0;
 			}
 
 			.hero > * {

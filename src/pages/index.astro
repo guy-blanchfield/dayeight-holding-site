@@ -59,10 +59,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		<title>Day Eight - Design | Social | PR</title>
 	</head>
 	<body>
-
-		<!-- sibling div to main for the background image, 
-		instead of background-attachment: fixed -->
-		<div class="mobile-background"></div>
+		
 		<main>
 			<section class="hero">
 				<!-- order of formats is important -->
@@ -80,28 +77,31 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				</div>
 
 				<div class="logo-and-strap">
-					
-					<div class="logo-and-strap__logo">
-						<Icon name="day-eight-logo" class="day-eight-logo" aria-hidden="true" />
-						<span class="visually-hidden">Day Eight</span>
-					</div>
+
+					<!-- put all the logo and strap in an inner container for the animation -->
+					<div class="logo-and-strap__container">
+						<div class="logo-and-strap__logo">
+							<Icon name="day-eight-logo" class="day-eight-logo" aria-hidden="true" />
+							<span class="visually-hidden">Day Eight</span>
+						</div>
+		
+						<h1 class="logo-and-strap__strap">Design <span class="text-accent">|</span> Social <span class="text-accent">|</span> PR</h1>
 	
-					<h1 class="logo-and-strap__strap">Design <span class="text-accent">|</span> Social <span class="text-accent">|</span> PR</h1>
-
-					<div class="logo-and-strap__more-link">
-
-						<a href="#about-us">
-							<Icon name="down-arrow" class="down-arrow" aria-hidden="true" />
+						<div class="logo-and-strap__more-link">
+	
+							<a href="#about-us">
+								<Icon name="down-arrow" class="down-arrow" aria-hidden="true" />
+							
+								<span class="visually-hidden">Find out more about Day Eight</span>
+							</a>
+							
+						</div>
 						
-							<span class="visually-hidden">Find out more about Day Eight</span>
-						</a>
-						
-					</div>
+						<!-- Let's hide this link from assistive tech, bc we've already got it in the prev div -->
+						<!-- that means we also need to make it unfocusable with tabindex -1 -->
+						<a href="#about-us" class="logo-and-strap__invisible-link" aria-hidden="true" tabindex="-1">Find out more about Day Eight</a>
 					
-					<!-- Let's hide this link from assistive tech, bc we've already got it in the prev div -->
-					<!-- that means we also need to make it unfocusable with tabindex -1 -->
-					<a href="#about-us" class="logo-and-strap__invisible-link" aria-hidden="true" tabindex="-1">Find out more about Day Eight</a>
-				
+					</div>
 					
 				</div>
 
@@ -260,7 +260,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		}
 
 		@media (min-width: 700px) {
-			.main::before {
+			main::before {
 				content: none;
 			}
 		}
@@ -367,6 +367,14 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 		.logo-and-strap {
 			display: flex;
+			border: 1px solid blue;
+		}
+
+		.logo-and-strap__container {
+			/* so it fills available horizontal space */
+			flex-basis: 100%;
+			
+			display: flex;
 			flex-direction: column;
 			/* no gap because of the more-link, which counts as a flex item */
 			/* gap: 4rem; */
@@ -379,7 +387,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			/* position here so we can position the more-link absolutely */
 			position: relative;
 
-			/* border: 1px solid fuchsia; */
+			border: 1px solid fuchsia;
 		}
 
 		.day-eight-logo {

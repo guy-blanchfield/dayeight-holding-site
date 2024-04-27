@@ -149,7 +149,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 					
 				</div>
 
-				<div class="picture-container hello">
+				<div class="hello">
 					<Picture class="contact__img picture-image picture-image--hide" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy">
 				</div>
 
@@ -184,7 +184,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		function loadImage(img: HTMLImageElement) {
 			//  check complete and naturalWidth first
 			//  if either .complete or naturalWidth is false, assume the image is not yet loaded
-			if ((img?.complete && img.naturalWidth)) {
+			if ((img.complete && img.naturalWidth)) {
 				img.classList.add("picture-image--show");
 				// console.log("image already loaded")
 				return;
@@ -328,9 +328,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			}
 
 			.picture-container {
-				background-position: center center;
-				background-repeat: no-repeat;
-				background-size: cover;
+				
 			}
 
 			.picture-image {

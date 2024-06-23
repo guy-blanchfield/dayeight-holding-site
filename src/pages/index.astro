@@ -202,40 +202,17 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 	<style define:vars={{graffitiBgImage, oceanBgImage}}>
 
-		/* temporarily set bgcolor to lime */
+
 		body {
-			/* background-color: #C5D65B; */
 
-  			/* background-image: var(--graffitiBgImage), var(--oceanBgImage);
-  			background-position: center top, center bottom;
-  			background-repeat: no-repeat, no-repeat;
-			background-attachment: fixed, fixed;
-			background-size: contain, contain; */
-
-			/* background-image: var(--graffitiBgImage);
-  			background-position: left top;
-  			background-repeat: repeat; */
-
-			/* this is problematic for iOS and some mobile browsers */
-			/* @supports (-webkit-overflow-scrolling: touch) might work as a check for it */
-			/* other possible options here: https://stackoverflow.com/questions/14115080/detect-support-for-background-attachment-fixed */
-			
-			/* background-attachment: fixed;
-			background-size: contain;
-			background-size: auto 100%; */
-
-			/* lets have a bg color so it doesn't look shit while the image is loading */
-			/* background-color: hsl(var(--accent)); */
-
-			/* padding-top: 10rem; */
 		}
 
-		@media(min-width: 700px) {
+		/* @media(min-width: 700px) {
 			body {
 				background-image: none;
 				padding-top: 0;
 			}
-		}
+		} */
 
 		/* put a pseudo before main where the background image goes (for mobile) 
 		because background-attachment: fixed won't work on iOS */
@@ -266,13 +243,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		}
 
 		main {
-			/* position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			border: 1px solid yellow; */
-			
 			/* position: relative; */
 			z-index: 1;
 		}
@@ -464,10 +434,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				color: hsl(var(--accent));
 			}
 
-			/* a:hover .down-arrow {
-				color: hsl(var(--accent));
-			} */
-
 			.logo-and-strap__invisible-link {
 				display: block;
 				position: absolute;
@@ -480,7 +446,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				z-index: 100;
 			}
 
-			/* do we need a hover focus for the invisble link? */
 		}
 
 		.about-us {
@@ -580,7 +545,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 		.contact > :first-child() {
 			padding: 3rem 3rem;
-			/* border: 1px solid darkcyan; */
 		}
 
 		.contact__heading {
@@ -600,8 +564,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			/* accessibility audit: Background and foreground colors do not have a sufficient contrast ratio. */
 			padding: 0.5rem 1.5rem;
 			background-color: hsl(var(--accent3));
-			/* try a darker version of accent3 for better contrast - nah */
-			/* background-color: hsl(var(--background-dark)); */
 			/* gonna leave this as is - it's only a button, you don't need to be able
 			to read the text, it should be obvious that it's an email address
 			and also the hover / focus colour passes the contrast test */
@@ -615,7 +577,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			width: 28ch;
 			/* bc of the max-content, we need to make the 
 			font-smaller on mobile (browser default seems to be 1.5rem?) */
-			/* which isn't the same as initial, why not? investigate! */
+			/* which isn't the same as initial */
 			font-size: 0.9rem;
 		}
 

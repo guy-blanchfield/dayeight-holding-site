@@ -20,7 +20,7 @@ export default defineConfig({
 	vite: {
 		esbuild: {
 			// uncomment this for production!!
-			drop: ["console", "debugger"],
+			// drop: ["console", "debugger"],
 		},
 	},
 });

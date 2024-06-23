@@ -1,0 +1,429 @@
+---
+
+import { Icon } from "astro-icon/components"
+
+import "../styles/reset.css";
+import "../styles/global.css";
+
+// think bg image paths have to be passed into <style> as variables
+const graffitiBgImage = 'url(/images/graffiti-700.jpg)';
+const oceanBgImage = 'url(/images/ocean-810x810.jpg)';
+
+
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<!-- <link rel="icon" type="image/svg+xml" href="/favicon-disc-accent.svg" /> -->
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="Day Eight is a creative communication agency helping people with branding, social media and PR.">
+		<title>Day Eight - Design | Social | PR</title>
+	</head>
+	<body>
+
+		<!-- sibling div to main for the background image, 
+		instead of background-attachment: fixed -->
+		<div class="mobile-background"></div>
+		<main>
+			<header>
+
+				<div class="logo-and-strap">
+					
+					<div class="logo-and-strap__logo">
+                        <a href="/">
+						    <Icon name="day-eight-logo" class="day-eight-logo" aria-hidden="true" />
+						    <span class="visually-hidden">Day Eight</span>
+                        </a>
+					</div>
+	
+					<h1 class="logo-and-strap__strap">Design <span class="text-accent">|</span> Social <span class="text-accent">|</span> PR</h1>
+					
+				</div>
+					
+			</header>
+	
+			<section class="body-404" id="body-404">
+				<div>
+					<h2 class="body-404__heading serif">Page Not Found<span class="text-accent">.</span></h2>
+				</div>
+				
+				<div>
+					<div class="body-404__text">
+						<p>Sorry, we can't find the page that you requested.</p>
+						<p>It's probably been moved or deleted. Try returning to the <a href="/" class="text-accent2">home&nbsp;page</a>.</p>
+					</div>
+					
+				</div>
+				
+			</section>
+
+
+            <footer>
+
+				<div class="footer__social-links">
+					<ul class="footer__social-links-list unstyled-list">
+						<li><a href="https://www.linkedin.com/company/wearedayeight/" target="_blank" rel="noopener noreferrer external nofollow" class="social-link"><Icon name="social/linkedin-icon" class="social-icon" aria-hidden="true" /><span class="visually-hidden">LinkedIn</span></a></li>
+						<li><a href="https://www.instagram.com/wearedayeight/" target="_blank" rel="noopener noreferrer external nofollow" class="social-link"><Icon name="social/insta-icon" class="social-icon" aria-hidden="true" /><span class="visually-hidden">Instagram</span></a></li>
+						<li><a href="https://twitter.com/wearedayeight" target="_blank" rel="noopener noreferrer external nofollow" class="social-link"><Icon name="social/x-icon" class="social-icon" aria-hidden="true" /><span class="visually-hidden">X (formerly Twitter)</span></a></li>
+					</ul>
+				</div>
+			</footer>
+
+		</main>
+		
+
+	</body>
+
+	<style define:vars={{graffitiBgImage, oceanBgImage}}>
+
+		@media(min-width: 700px) {
+			body {
+                background-color: hsl(var(--background-dark));
+				background-image: none;
+				padding-top: 0;
+			}
+		}
+
+        main {
+			z-index: 1;
+		}
+
+		/* put a pseudo before main where the background image goes (for mobile) 
+		because background-attachment: fixed won't work on iOS */
+		main::before {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			/* vh should work here (100% resizes when the adress bar shows/hides, which is no good) 
+			we don't need svh because of position fixed apparently */
+			width: 100vw;
+			height: 100vh;
+			/* border: 1px solid fuchsia; */
+			background-image: var(--graffitiBgImage);
+  			background-position: left top;
+  			background-repeat: repeat;
+			/* background-size: contain; */
+			background-size: auto 100%;
+			/* lets have a bg color so it doesn't look shit while the image is loading */
+			background-color: hsl(var(--accent));
+			z-index: -1;
+		}
+
+		@media (min-width: 700px) {
+
+            main {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                min-height: 100vh;
+                /* border: 1px solid magenta; */
+            }
+
+			main::before {
+				content: none;
+                /* background: none; */
+			}
+		}
+
+		header {
+
+			display: flex;
+			/* direction column for mobile */
+			flex-direction: column;
+			/* width: 100%; */
+			/* min-height: 100vh; */
+			/* height: 100vh; */
+
+			background-color: hsl(var(--background-light));
+
+			/* margin-bottom so some of the bg image shows through */
+			margin-bottom: 5rem;
+		}
+		
+
+		/* desktop / laptop */
+		@media (min-width: 700px) {
+            
+			header {
+				flex-direction: row;
+				margin-bottom: 0;
+			}
+
+			header > * {
+				/* we want each child to try to take up maximum space, that way they'll shrink uniformly */
+				flex-grow: 0;
+				flex-shrink: 1;
+				/* flex-basis: 100%; */
+				/* border: 1px solid fuchsia; */
+				/* display: initial; */
+			}
+			
+		}
+
+		.logo-and-strap {
+			display: flex;
+			flex-direction: column;
+			/* no gap because of the more-link, which counts as a flex item */
+			/* gap: 4rem; */
+			justify-content: center;
+			align-items: center;
+			/* padding: 5rem 0 4rem 0; */
+			padding: 4rem 0;
+			/* background-color: aqua; */
+
+			/* position here so we can position the more-link absolutely */
+			position: relative;
+
+			/* border: 1px solid fuchsia; */
+		}
+
+        /* the home page link */
+        .logo-and-strap a:focus-visible {
+            outline: none;
+        }
+
+        .logo-and-strap a:focus-visible .day-eight-logo {
+            color: hsl(var(--background-dark));
+        }
+
+		.day-eight-logo {
+			color: white;
+			/* astro-icons 1.1 now uses font-size instead of width/height */
+			font-size: 7rem;
+			padding: 0 1rem;
+		}
+
+		.logo-and-strap__strap {
+			color: hsl(var(--text-dark));
+			font-weight: normal;
+			word-spacing: 0.3rem;
+			width: max-content;
+			/* bc of the max-content, we need to make the 
+			font-smaller on mobile */
+			font-size: 1rem;
+			/* padding-top now, instead of gap */
+			padding-top: 3rem;
+
+			/* border: 1px solid blueviolet; */
+		}
+		
+
+		/* we only really need the down arrow on desktop */
+		@media (min-width: 700px) {
+
+            .logo-and-strap {
+			    /* flex-direction: row; */
+			    /* no gap because of the more-link, which counts as a flex item */
+                /* gap: 4rem; */
+                /* with flex-basis auto on header > *, we can center horizontally */
+                justify-content: start;
+                align-items: center;
+                /* padding: 5rem 0 4rem 0; */
+                padding: 1rem;
+                padding-top: 1.5rem;
+                gap: 1rem;
+                /* background-color: aqua; */
+                /* padding: 0; */
+                /* position here so we can position the more-link absolutely */
+                position: relative;
+
+                /* border: 1px solid fuchsia; */
+		    }
+
+            .logo-and-strap > * {
+                /* border: 1px solid yellow; */
+                /* flex-grow: 0;
+                flex-shrink: 1; */
+            }
+
+			.logo-and-strap__strap {
+				font-size: 0.9rem;
+                padding: 0;
+				/* padding-left: 3rem; */
+				/* padding-right: 3rem; */
+				/* padding-top is set above (mobile) */
+				/* padding: 0 3rem; */
+				/* font-size: initial; */
+			}
+
+		}
+
+		.body-404 {
+			color: hsl(var(--white));
+			background-color: hsl(var(--background-dark));
+
+			/* margin-bottom so some of the bg image shows through */
+			margin-bottom: 10rem;
+		}
+
+		.body-404 > * {
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+            /* start for mobile, center for desktop */
+			align-items: start;
+			gap: 3rem;
+			/* border: 1px solid lightcoral; */
+		}
+
+		.body-404 > :first-child() {
+			padding: 4rem 3rem;
+			padding: 4rem 3rem 0 3rem;
+			/* padding top but not bottom for mobile
+			because it stacks, the following div's top padding 
+			will take care of it */
+		}
+
+		.body-404 > :last-child() {
+			padding: 4rem 3rem;
+			/* remember that the about-us__text has got max-width in ch 
+			so it'll look like there's more horizontal padding on 
+			wider screens */
+
+			/* NB better to set a min-height on about-us section
+			than trying to do it with vertical padding - see media 
+			query below */
+			/* keep a bit just for tidiness */
+		}
+
+		.body-404__heading {
+			font-size: 2rem;
+			font-weight: normal;
+			line-height: 1;
+			max-width: 12ch;
+			/* width: 75%; */
+			text-wrap: balance;
+			/* border: 1px solid slateblue; */
+		}
+
+		.body-404__text {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+			padding: 0;
+			max-width: 52ch;
+		}
+
+        .body-404__text a {
+            text-decoration: none;
+        }
+
+        .body-404__text a:is(:hover, :focus-visible) {
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 0.4rem;
+        }
+
+		@media (min-width: 700px) {
+			.body-404 { 
+				display: flex;
+				/* min-height: 20rem; */
+				margin-bottom: 0;
+			}	
+
+			.body-404 > * {
+				flex-grow: 0;
+				flex-shrink: 1;
+				flex-basis: 50%;
+
+                /* center for desktop, start for mobile (see above) */
+                align-items: center;
+			}
+
+			/* need higher specificity than > * to override the padding rule */
+			.body-404 > :first-child() {
+				padding: 0 3rem;
+			}
+
+			.body-404__heading {
+				font-size: 4rem;
+				/* border: 1px solid slateblue; */
+			}
+
+			.body-404__text {
+				/* padding: 4rem 0; */
+				max-width: 52ch;
+			}
+
+		}
+
+        footer {
+			background-color: hsl(var(--white));
+		}
+
+		footer > * {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		/* footer > :first-child() { */
+			/* padding: 3rem 3rem; */
+			/* border: 1px solid darkcyan; */
+		/* } */
+
+		.footer__social-links {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 1.5rem 0;
+			background-color: hsl(var(--accent2));
+		}
+
+		.footer__social-links-list {
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			gap: 0.8rem;
+			/* border: 1px solid darkorange; */
+		}
+
+		.social-link {
+			transition: transform 125ms ease-in;
+			/* display: block so it can scale() */
+			display: block;
+			/* border: 1px solid fuchsia; */
+		}
+
+		.social-link:is(:hover, :focus-visible) {
+			transform: scale(1.2);
+			outline: none;
+		}
+
+		.social-icon {
+			font-size: 2rem;
+		}
+
+		/* contact flex stuff for desktop only */
+		@media (min-width: 700px) {
+
+			footer {
+				display: flex;
+				/* default flex-wrap is nowrap!!! */
+				flex-wrap: wrap;
+				width: 100%;
+				background-color: hsl(var(--white));
+				/* border: 3px solid blue; */
+			}
+
+			.footer__heading {
+				font-size: 4rem;
+			}
+
+			.footer__email {
+				font-size: 1rem;
+			}
+
+			.footer__social-links {
+				flex: 1 0 100%;
+			}
+		}
+		
+	</style>
+</html>

@@ -28,8 +28,10 @@ import helloImage from "../assets/images/hello-16x9-fullscale.jpg"
 // const oceanLQIP = `url(/images/ocean-lqip-blur.jpg)`;
 
 // think bg image paths have to be passed into <style> as variables
-const graffitiBgImage = 'url(/images/graffiti-700.jpg)';
-const oceanBgImage = 'url(/images/ocean-810x810.jpg)';
+// NB going with 960 because mobile height could be up to 900+ and bg image will stretch to cover the height
+const graffitiBgImageWebp = 'url(/images/graffiti-960.webp)';
+const graffitiBgImage = 'url(/images/graffiti-960.jpg)';
+// const oceanBgImage = 'url(/images/ocean-810x810.jpg)';
 
 
 // try this if you get time
@@ -200,7 +202,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		}
 	</script>
 
-	<style define:vars={{graffitiBgImage, oceanBgImage}}>
+	<style define:vars={{graffitiBgImage, graffitiBgImageWebp}}>
 
 
 		body {
@@ -227,6 +229,18 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			height: 100vh;
 			/* border: 1px solid fuchsia; */
 			background-image: var(--graffitiBgImage);
+
+			/* use image-set to specify alternative formats */
+			background-image: -webkit-image-set(
+				url("large-balloons.avif"),
+				url("large-balloons.jpg"));
+			background-image: image-set(
+				url("large-balloons.avif") type("image/avif"),
+				url("large-balloons.jpg") type("image/jpeg"));
+
+			background-image: -webkit-image-set(var(--graffitiBgImageWebp), var(--graffitiBgImage));
+			background-image: image-set(var(--graffitiBgImageWebp) type("image/webp"), var(--graffitiBgImage) type("image/jpeg"));
+
   			background-position: left top;
   			background-repeat: repeat;
 			/* background-size: contain; */
@@ -239,6 +253,8 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		@media (min-width: 700px) {
 			main::before {
 				content: none;
+				/* need to specify background: none otherwise desktop still downloads the image */
+				background: none;
 			}
 		}
 

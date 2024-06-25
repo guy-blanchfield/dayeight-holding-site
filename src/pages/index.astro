@@ -773,34 +773,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		@media (min-width: 700px) and (prefers-reduced-motion: no-preference) {
 			@supports (animation-timeline: scroll()) {
 
-				/* if animation-timeline is supported, adjust the scroll-margin-top for .about-us 
-				bc the scrolling animation moves the positions of things while scrolling, so the anchor link
-				scrolls to the wrong place */
-
-				html {
-					/* essentially the amount we have to adjust by depends on the viewport height
-					- bc the further the page has to scroll to get to the anchor,
-					the more the hero height will have reduced, therefore bringing the anchor closer
-					to the top of the page */
-					/* so we probably need to calculate the offset relative to the vh */
-
-					/* can we get height relative to width to create a useful factor by which to multiply? 
-					e.g. 1024 / 768 is a relatively large vh, (1.33)
-					1024 / 240 is a relatively small vh (4.26) */
-
-					/* scroll-padding or margin value has to be higher, the larger the vh is */
-					/* yep, checked this! */
-
-					/* scroll-padding-top: 5rem; */
-					/* scroll-padding-top: calc(20rem * calc(1/100vh)); */
-					/* scroll-padding-top: calc(20rem * calc(100vw/100vh)); */
-					/* scroll-padding-top: 40vh; */
-				}
-
-				/* .about-us {
-					scroll-margin-top: 21rem;
-				} */
-
 				.hero {
 					/* N.B. animating the hero height caused problems with the anchor link 
 					scrolling to the wrong place (bc the position of the next section changed during the scroll!) 
@@ -820,37 +792,17 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 					/* animation: logo-and-strap-container-scale 2s 5s linear forwards; */
 					animation: logo-and-strap-container-scale linear forwards;
 					animation-timeline: scroll();
-					/* animation-timeline: view(); */
-					/* animation-range-start: calc(100vh + var(--_animationStartsAfter)); */
-					/* animation-range-end: calc(100vh + var(--_animationStartsAfter) + var(--_animationDistance)); */
-					/* animation-range-start: calc(100vh + 100px); */
-					/* animation-range-end: calc(100vh + 100px + 1000px); */
-					/* animation-range-start: var(--animationRangeStart); */
-					/* animation-range-end: var(--animationRangeEnd); */
 				}
 
 				@keyframes logo-and-strap-container-scale {
 					to {
-						/* think we have to animate the background */
-						/* see: https://stackoverflow.com/questions/62285306/css-hover-transition-width-from-the-center */
-						/* background-size: 200% 100%; */
 						width: 300%;
-						/* probably need to do any height animation on hero not here */
-						/* height: 50%; */
 					}
 				}
 
 				.down-arrow {
-					/* animation: down-arrow-disappear 2s 5s linear forwards; */
 					animation: down-arrow-disappear linear forwards;
 					animation-timeline: scroll();
-					/* animation-timeline: view(); */
-					/* animation-range-start: calc(100vh + var(--_animationStartsAfter)); */
-					/* animation-range-end: calc(100vh + var(--_animationStartsAfter) + var(--_animationDistance)); */
-					/* animation-range-start: calc(100vh + 100px); */
-					/* animation-range-end: calc(100vh + 100px + 1000px); */
-					/* animation-range-start: var(--animationRangeStart); */
-					/* animation-range-end: var(--animationRangeEnd); */
 				}
 
 				@keyframes down-arrow-disappear {
@@ -859,26 +811,14 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 						it doesn't need to animate just display: none 
 						when the hero and logo-and-strap animate */
 
-						/* also! visibility: hidden works for the invisible-link but not for this
-						- it's still clickable when it's invisible - why? */
-						/* icon becomes invisible but still takes up space within its container
-						(which is an <a>) so it's still clickable */
-						/* visibility: hidden; */
 						display: none;
-						/* seems like display: none works! */
 					}
 				}
 
 				.logo-and-strap__invisible-link {
 
-					/* animation: invisible-link-disappear 2s 5s linear forwards; */
 					animation: invisible-link-disappear linear forwards;
 					animation-timeline: scroll();
-					/* animation-timeline: view(); */
-					/* animation-range-start: calc(100vh + var(--_animationStartsAfter)); */
-					/* animation-range-end: calc(100vh + var(--_animationStartsAfter) + var(--_animationDistance)); */
-					/* animation-range-start: var(--animationRangeStart); */
-					/* animation-range-end: var(--animationRangeEnd); */
 				}
 
 				@keyframes invisible-link-disappear {
@@ -893,7 +833,5 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			}
 		}
 
-		
-		
 	</style>
 </html>

@@ -61,10 +61,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		<title>Day Eight - Design | Social | PR</title>
 	</head>
 	<body>
-
-		<!-- sibling div to main for the background image, 
-		instead of background-attachment: fixed -->
-		<div class="mobile-background"></div>
+		
 		<main>
 			<section class="hero">
 				<!-- order of formats is important -->
@@ -79,40 +76,46 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				<!-- we have to specify eager -->
 				<div class="picture-container graffiti">
 					<Picture class="hero__img picture-image picture-image--hide" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall" loading="eager">
+					<!-- <Picture class="hero__img picture-image picture-image--hide" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above" loading="eager"> -->
 				</div>
 
 				<div class="logo-and-strap">
-					
-					<div class="logo-and-strap__logo">
-						<Icon name="day-eight-logo" class="day-eight-logo" aria-hidden="true" />
-						<span class="visually-hidden">Day Eight</span>
-					</div>
+
+					<!-- put all the logo and strap in an inner container for the animation -->
+					<div class="logo-and-strap__container">
+						<div class="logo-and-strap__logo">
+							<Icon name="day-eight-logo" class="day-eight-logo" aria-hidden="true" />
+							<span class="visually-hidden">Day Eight</span>
+						</div>
+		
+						<h1 class="logo-and-strap__strap">Design <span class="text-accent">|</span> Social <span class="text-accent">|</span> PR</h1>
 	
-					<h1 class="logo-and-strap__strap">Design <span class="text-accent">|</span> Social <span class="text-accent">|</span> PR</h1>
-
-					<div class="logo-and-strap__more-link">
-
-						<a href="#about-us">
-							<Icon name="down-arrow" class="down-arrow" aria-hidden="true" />
+						<div class="logo-and-strap__more-link">
+	
+							<a href="#about-us">
+								<Icon name="down-arrow" class="down-arrow" aria-hidden="true" />
+							
+								<span class="visually-hidden">Find out more about Day Eight</span>
+							</a>
+							
+						</div>
 						
-							<span class="visually-hidden">Find out more about Day Eight</span>
-						</a>
-						
-					</div>
+						<!-- Let's hide this link from assistive tech, bc we've already got it in the prev div -->
+						<!-- that means we also need to make it unfocusable with tabindex -1 -->
+						<a href="#about-us" class="logo-and-strap__invisible-link" aria-hidden="true" tabindex="-1">Find out more about Day Eight</a>
 					
-					<!-- Let's hide this link from assistive tech, bc we've already got it in the prev div -->
-					<!-- that means we also need to make it unfocusable with tabindex -1 -->
-					<a href="#about-us" class="logo-and-strap__invisible-link" aria-hidden="true" tabindex="-1">Find out more about Day Eight</a>
-				
+					</div>
 					
 				</div>
 
 				<div class="picture-container ocean">
 					<Picture class="hero__img picture-image picture-image--hide" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above" loading="eager">
+					<!-- <Picture class="hero__img picture-image picture-image--hide" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall" loading="eager"> -->
 				</div>
 					
 			</section>
-	
+			<!-- this anchor doesn't work properly with the scroll animation - it scrolls down too far! -->
+			<!-- should be able to fix it with scroll-margin-top -->
 			<section class="about-us" id="about-us">
 				<div>
 					<h2 class="about-us__heading serif">Just good people doing good stuff<span class="text-accent">.</span></h2>
@@ -169,6 +172,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 	</body>
 
 	<script src="/src/js/decodeEmail.js"></script>
+	<!-- N.B. Tried JS Polyfill: https://github.com/flackr/scroll-timeline - was a non-starter -->
 
 	<script>
 		// hide the picture images until they've loaded
@@ -185,7 +189,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 		function loadImage(img: HTMLImageElement) {
 			//  check complete and naturalWidth first
-			//  if either .complete or naturalWidth is false, assume the image is not yet loaded
+			//  if .complete AND naturalWidth is true, assume the image has already loaded
 			if ((img.complete && img.naturalWidth)) {
 				img.classList.add("picture-image--show");
 				// console.log("image already loaded")
@@ -288,7 +292,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		@media (min-width: 700px) {
 			.hero {
 				flex-direction: row;
-				min-height: 100vh;
+				height: 100vh;
 				margin-bottom: 0;
 			}
 
@@ -351,22 +355,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			
 		}
 
-		.logo-and-strap {
-			display: flex;
-			flex-direction: column;
-			/* no gap because of the more-link, which counts as a flex item */
-			/* gap: 4rem; */
-			justify-content: center;
-			align-items: center;
-			/* padding: 5rem 0 4rem 0; */
-			padding: 5rem 0;
-			/* background-color: aqua; */
-
-			/* position here so we can position the more-link absolutely */
-			position: relative;
-
-			/* border: 1px solid fuchsia; */
-		}
 
 		.day-eight-logo {
 			color: white;
@@ -399,13 +387,59 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		/* we only really need the down arrow on desktop */
 		@media (min-width: 700px) {
 
+			/* this is the flex child of .hero (one of three) */
 			.logo-and-strap {
+
+				display: flex;
+				position: relative;
+				/* border: 1px solid blue; */
 				/* padding: 4rem 0; */
 				/* don't need padding because hero has height in desktop */
 				/* and flex will justify-content center */
 				/* it's not doing any harm but it's easier to see what's 
 				happening without it */
 				padding: 0;
+			}
+
+			/* this sits inside logo-and-strap */
+			/* and will hopefully animate beyond its flex item space */
+			.logo-and-strap__container {
+
+				/* so it fills available horizontal space */
+				flex-basis: 100%;
+
+				display: flex;
+				flex-direction: column;
+				/* no gap because of the more-link, which counts as a flex item */
+				/* gap: 4rem; */
+				justify-content: center;
+				align-items: center;
+				/* padding: 5rem 0 4rem 0; */
+				padding: 5rem 0;
+				/* background-color: aqua; */
+
+				/* position here so we can position the more-link absolutely */
+				/* and so we can animate it beyond its flex space / position */
+				/* position: relative; */
+				position: absolute;
+  				/* top: 50%; */
+  				left: 50%;
+				top: 0;
+				/* left: 0; */
+				width: 100%;
+				height: 100%;
+  				transform: translate(-50%, 0%);
+
+				/* border: 1px solid fuchsia; */
+				/* background-color: aquamarine; */
+				background-color: hsl(var(--accent2));
+
+				/* for the background animated resize */
+				/* background-position: center; */
+				/* background-size: 100%; */
+				/* overflow-x: visible; */
+
+				/* transform-origin: center; */
 			}
 
 			.logo-and-strap__strap {
@@ -437,8 +471,10 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				font-size: 2rem;
 				color: hsl(var(--white)/0.75);
 				opacity: 0;
+				/* border: 1px solid fuchsia; */
 				transition: opacity 250ms ease-in;
 			}
+
 
 			.logo-and-strap:hover .down-arrow {
 				opacity: 1;
@@ -525,7 +561,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				display: flex;
 				min-height: 35rem;
 				margin-bottom: 0;
-			}	
+			}
 
 			.about-us > * {
 				flex-grow: 0;
@@ -673,6 +709,72 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				flex: 1 0 100%;
 			}
 		}
-		
+
+
+		/* -------------------------- animation timeline stuff ------------------------------ */
+
+		@media (min-width: 700px) and (prefers-reduced-motion: no-preference) {
+			@supports (animation-timeline: scroll()) {
+
+				.hero {
+					/* N.B. animating the hero height caused problems with the anchor link 
+					scrolling to the wrong place (bc the position of the next section changed during the scroll!) 
+					so let's not do that, it looks more or less the same anyway */
+					/* animation: hero-scale linear forwards; */
+					/* animation-timeline: scroll(); */
+				}
+
+				@keyframes hero-scale {
+					to {
+						height: 20rem;
+					}
+				}
+
+				.logo-and-strap__container {
+
+					/* animation: logo-and-strap-container-scale 2s 5s linear forwards; */
+					animation: logo-and-strap-container-scale linear forwards;
+					animation-timeline: scroll();
+				}
+
+				@keyframes logo-and-strap-container-scale {
+					to {
+						width: 300%;
+					}
+				}
+
+				.down-arrow {
+					animation: down-arrow-disappear linear forwards;
+					animation-timeline: scroll();
+				}
+
+				@keyframes down-arrow-disappear {
+					to {
+						/* is there a better way to do this? 
+						it doesn't need to animate just display: none 
+						when the hero and logo-and-strap animate */
+
+						display: none;
+					}
+				}
+
+				.logo-and-strap__invisible-link {
+
+					animation: invisible-link-disappear linear forwards;
+					animation-timeline: scroll();
+				}
+
+				@keyframes invisible-link-disappear {
+					to {
+						/* is there a better way to do this? 
+						it doesn't need to animate just display: none 
+						when the hero and logo-and-strap animate */
+
+						display: none;
+					}
+				}
+			}
+		}
+
 	</style>
 </html>

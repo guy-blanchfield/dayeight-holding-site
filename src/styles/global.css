@@ -28,8 +28,12 @@ html {
 	/* --darkteal: 182 68% 23%; */
 	--darkteal: 182 68% 30%;
 
+	/* grey */
+	--midgrey: 186 40% 50%;
+
 	/* applied colours */
 	--text-light: var(--white);
+	--text-mid: var(--midgrey);
 	--text-dark: var(--darknavy);
 	--background-light: var(--lime);
 	--background-dark: var(--navy);

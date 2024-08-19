@@ -355,6 +355,39 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			
 		}
 
+		/* ----------------------- this is where a load of css disappeared from (?!!!!) ----------------------------------- */
+		/* using css from 404.astro to fill in the gap */
+
+		/* following rule was logo-and-strap in 404 (there's no logo-and-strap__container in 404) */
+
+		/* .logo-and-strap { */
+		.logo-and-strap__container {
+			display: flex;
+			flex-direction: column;
+			/* no gap because of the more-link, which counts as a flex item */
+			/* gap: 4rem; */
+			justify-content: center;
+			align-items: center;
+			/* padding: 5rem 0 4rem 0; */
+			padding: 4rem 0;
+			/* background-color: aqua; */
+
+			/* position here so we can position the more-link absolutely */
+			position: relative;
+
+			/* border: 1px solid fuchsia; */
+		}
+
+        /* the home page link */
+        .logo-and-strap a:focus-visible {
+            outline: none;
+        }
+
+        .logo-and-strap a:focus-visible .day-eight-logo {
+            color: hsl(var(--background-dark));
+        }
+
+		/* ----------------- end replaced missing stuff! ----------------------------- */
 
 		.day-eight-logo {
 			color: white;

@@ -738,6 +738,8 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			align-items: center;
 			padding: 1.5rem 0;
 			background-color: hsl(var(--accent2));
+
+			/* min-height: 20rem; */
 		}
 
 		.social-links__social-links-list {
@@ -839,8 +841,9 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		.insta-feed {
 
 			/* border: 1px solid fuchsia; */
-			/* background-color: papayawhip; */
-
+			background-color: hsl(var(--white));
+			/* crt-feed has padding 20px block, 50px inline */
+			padding-block: 30px;
 
 		}
 
@@ -850,6 +853,8 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			font-size: 0.75rem;
 			color: hsl(var(--text-note));
 			/* background-color: hotpink; */
+			/* crt-feed has padding 20px block, 50px inline */
+			padding-inline-end: 50px;
 		}
 
 	</style>

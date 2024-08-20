@@ -160,7 +160,17 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 			</section>
 
-			<section class="social-links">
+			
+
+			<!-- the embedded instagram posts -->
+			<section class="insta-feed">
+
+				<div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
+				
+			</section>
+
+
+            <section class="social-links">
 
 				<div class="social-links__social-links-container">
 					<ul class="social-links__social-links-list unstyled-list">
@@ -170,13 +180,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 					</ul>
 				</div>
 
-			</section>
-
-			<!-- the embedded instagram posts -->
-			<section class="insta-feed">
-
-				<div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
-				
 			</section>
 
 		</main>
@@ -839,8 +842,9 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		.insta-feed {
 
 			/* border: 1px solid fuchsia; */
-			/* background-color: papayawhip; */
-
+            /* padding-block: 2.5rem; */
+            padding-block: 30px;
+			background-color: hsl(var(--background-dark));
 
 		}
 
@@ -850,6 +854,8 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			font-size: 0.75rem;
 			color: hsl(var(--text-note));
 			/* background-color: hotpink; */
+            /* crt-feed has padding 20px block, 50px inline */
+            padding-inline-end: 50px;
 		}
 
 	</style>

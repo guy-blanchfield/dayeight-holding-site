@@ -75,7 +75,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				<!-- NB! default value of loading attr is lazy for the Picture component -->
 				<!-- we have to specify eager -->
 				<div class="picture-container graffiti">
-					<Picture class="hero__img picture-image picture-image--hide" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall" loading="eager" />
+					<Picture class="hero__img picture-image picture-image--hide" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall" loading="eager">
 					<!-- <Picture class="hero__img picture-image picture-image--hide" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above" loading="eager"> -->
 				</div>
 
@@ -109,7 +109,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				</div>
 
 				<div class="picture-container ocean">
-					<Picture class="hero__img picture-image picture-image--hide" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above" loading="eager" />
+					<Picture class="hero__img picture-image picture-image--hide" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above" loading="eager">
 					<!-- <Picture class="hero__img picture-image picture-image--hide" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall" loading="eager"> -->
 				</div>
 					
@@ -155,24 +155,12 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				</div>
 
 				<div class="hello">
-					<div>Some div</div>
-					<Picture class="contact__img picture-image picture-image--hide" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy" />
-					<div>Div after the picture</div>
+					<Picture class="contact__img picture-image picture-image--hide" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy">
 				</div>
 
 			</section>
 
-			
-
-			<!-- the embedded instagram posts -->
-			<section class="insta-feed">
-
-				<div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
-				
-			</section>
-
-
-            <section class="social-links">
+			<section class="social-links">
 
 				<div class="social-links__social-links-container">
 					<ul class="social-links__social-links-list unstyled-list">
@@ -184,18 +172,24 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 			</section>
 
+			<!-- the embedded instagram posts -->
+			<section class="insta-feed">
+
+				<div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
+				
+			</section>
+
 		</main>
 
 		<!-- The Javascript can be moved to the end of the html page before the </body> tag -->
-
-        <script is:inline>
-        /* curator-feed-default-feed-layout */
-            (function(){
-            var i,e,d=document,s="script";i=d.createElement("script");i.async=1;i.charset="UTF-8";
-            i.src="https://cdn.curator.io/published/5bb65eba-0d06-4d26-877f-ac12d3e5f8ee.js";
-            e=d.getElementsByTagName(s)[0];e.parentNode.insertBefore(i, e);
-            })();
-        </script>
+		<script is:inline>
+		/* curator-feed-default-feed-layout */
+			(function(){
+			var i,e,d=document,s="script";i=d.createElement("script");i.async=1;i.charset="UTF-8";
+			i.src="https://cdn.curator.io/published/5bb65eba-0d06-4d26-877f-ac12d3e5f8ee.js";
+			e=d.getElementsByTagName(s)[0];e.parentNode.insertBefore(i, e);
+			})();
+		</script>
 		
 
 	</body>
@@ -264,14 +258,20 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			background-image: var(--graffitiBgImage);
 
 			/* use image-set to specify alternative formats */
+			background-image: -webkit-image-set(
+				url("large-balloons.avif"),
+				url("large-balloons.jpg"));
+			background-image: image-set(
+				url("large-balloons.avif") type("image/avif"),
+				url("large-balloons.jpg") type("image/jpeg"));
 
 			background-image: -webkit-image-set(var(--graffitiBgImageWebp), var(--graffitiBgImage));
 			background-image: image-set(var(--graffitiBgImageWebp) type("image/webp"), var(--graffitiBgImage) type("image/jpeg"));
 
   			background-position: left top;
-  			background-repeat: no-repeat;
-			background-size: cover;
-			/* background-size: auto 100%; */
+  			background-repeat: repeat;
+			/* background-size: contain; */
+			background-size: auto 100%;
 			/* lets have a bg color so it doesn't look shit while the image is loading */
 			background-color: hsl(var(--accent));
 			z-index: -1;
@@ -554,7 +554,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			background-color: hsl(var(--background-dark));
 
 			/* margin-bottom so some of the bg image shows through */
-			/* trying this on contact instead, now there's the instagram feed - nah */
 			margin-bottom: 10rem;
 		}
 
@@ -637,8 +636,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 		.contact {
 			background-color: hsl(var(--white));
-			/* margin-bottom so some of the bg image shows through - nah */
-			/* margin-bottom: 10rem; */
 		}
 
 		.contact > * {
@@ -656,12 +653,11 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			font-weight: normal;
 			font-size: 3rem;
 			letter-spacing: 0.05rem;
-			/* it wraps at smaller screen size (<770) 
+			/* it wraps at smaller screen size (<400) 
 			so we need smaller line-height */
-			line-height: 1.1;
+			/* line-height: 1.1; */
 			/* less line-height means we need a bit of bottom margin */
 			/* margin-bottom: 0.8rem; */
-			margin-bottom: 1rem;
 			/* nah just reduce the font-size */
 		}
 
@@ -703,8 +699,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				width: 100%;
 				background-color: hsl(var(--white));
 				/* border: 3px solid magenta; */
-				/* remove margin-bottom for desktop in case we put the gap under this one */
-				margin-bottom: 0;
 			}
 			/* set flex values for the first 2 children */
 			/* (the 2 50% columns, not the social links footer) */
@@ -728,27 +722,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				/* background-image: url('/images/hello-lqip.jpg'); */
 			}
 
-			/* this isn't applying for some reason - astro scoping issue! */
-			/* .hello picture {
-				display: flex;
-				width: 100%;
-				height: 100%;
-				border: 1px solid salmon;
-			} */
-
-			/* try a different selector */
-			/* .hello > * {
-				display: flex;
-				border: 1px solid firebrick;
-			} */
-
-
-			.hello img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-			}
-
 			.contact__email {
 				font-size: 1rem;
 			}
@@ -759,6 +732,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		/* social-links is now a separate section */
 		
 		.social-links {
+		/* .social-links__social-links-container { */
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -790,27 +764,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			font-size: 2rem;
 		}
 
-        /* Curator.io instagram feed stuff */
-		/* anything we want to override the curator.io styles need to go inline to get round astro's scoping
-		- see below, after this style tag */
-
-		.insta-feed {
-
-			/* border: 1px solid fuchsia; */
-			/* padding-block: 2.5rem; */
-			/* padding on desktop only */
-			background-color: hsl(var(--background-white));
-
-        }
-
-        /* background dark for desktop - accordion layout (white for mobile - grid layout) */
-        @media (min-width: 480px) {
-            .insta-feed {
-				/* padding on desktop only */
-				padding-block: 30px;
-                background-color: hsl(var(--background-dark));
-            }
-        }
 
 		/* -------------------------- animation timeline stuff ------------------------------ */
 
@@ -881,6 +834,15 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 	<!-- any style rules that we want to override the curator.io styles need to go inline to get round astro's scoping  -->
 	<style is:inline>
+		/* Curator.io instagram feed stuff */
+
+		.insta-feed {
+
+			/* border: 1px solid fuchsia; */
+			/* background-color: papayawhip; */
+
+
+		}
 
 		/* .insta-feed:is(.crt-logo, .crt-tag), */
 		.insta-feed .crt-widget.crt-widget-branded .crt-logo  {
@@ -888,46 +850,6 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			font-size: 0.75rem;
 			color: hsl(var(--text-note));
 			/* background-color: hotpink; */
-            /* little bit of inline end padding for the powered by logo */
-            padding-inline-end: 2px;
-            /* mobile needs the bottom position overriding (was 5px) (curator style is position absolute) */
-            bottom: 0px;
-            
-		}
-
-        .insta-feed button.crt-load-more {
-            /* color: hsl(var(--text-dark)); */
-
-            /* matching the email button here but with its hover bgc, for more contrast */
-            color: hsl(var(--text-light));
-            background-color: hsl(var(--accent));
-            /* if you want the teal... */
-            /* background-color: hsl(var(--accent3)); */
-            padding: 0.5rem 1.5rem;
-
-            /* let's have a bit or margin bottom so the powered by logo 
-            (which is absolutely positioned to the bottom of the widget)
-            is a bit further away from the button */
-
-            margin-block-end: 1rem;
-        }
-
-        @media (min-width: 480px) {
-            /* more inline end padding for the powered by logo on desktop */
-            .insta-feed .crt-widget.crt-widget-branded .crt-logo  {
-                /* crt-feed has padding 20px block, 50px inline */
-                padding-inline-end: 50px;
-                /* put the original bottom positioning back for desktop */
-                bottom: 5px;
-            }
-        }
-
-		/* try this in the inline style, see if it's a scoping thing - yep! */
-		.hello picture {
-			display: flex;
-			width: 100%;
-			height: 100%;
-			border: 1px solid papayawhip;
 		}
 
 	</style>

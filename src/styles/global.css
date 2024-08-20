@@ -37,6 +37,7 @@ html {
 	--text-mid: var(--midgrey);
 	--text-note: var(--lightgrey);
 	--text-dark: var(--darknavy);
+	--background-white: var(--white);
 	--background-light: var(--lime);
 	--background-dark: var(--navy);
 	--accent: var(--darklavender);

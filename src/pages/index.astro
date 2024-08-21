@@ -155,9 +155,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				</div>
 
 				<div class="hello">
-					<div>Some div</div>
 					<Picture class="contact__img picture-image picture-image--hide" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy" />
-					<div>Div after the picture</div>
 				</div>
 
 			</section>
@@ -728,20 +726,8 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				/* background-image: url('/images/hello-lqip.jpg'); */
 			}
 
-			/* this isn't applying for some reason - astro scoping issue! */
-			/* .hello picture {
-				display: flex;
-				width: 100%;
-				height: 100%;
-				border: 1px solid salmon;
-			} */
-
-			/* try a different selector */
-			/* .hello > * {
-				display: flex;
-				border: 1px solid firebrick;
-			} */
-
+			/* NB! rules for .hello picture are in the is:inline style tag below 
+			because of the way the astro Picture component works */
 
 			.hello img {
 				width: 100%;
@@ -800,6 +786,8 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			/* padding-block: 2.5rem; */
 			/* padding on desktop only */
 			background-color: hsl(var(--background-white));
+			/* little bit of bottom padding for mobile */
+			padding-block-end: 0.5rem;
 
         }
 
@@ -922,12 +910,13 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
             }
         }
 
-		/* try this in the inline style, see if it's a scoping thing - yep! */
+		/* we also need rules for picture as is:inline because of the way the astro Picture component works
+		i.e. it doesn't add a data attribute to the <picture> element so scoped style won't apply to <picture>s
+		we could put this rule in global.css, but it's not really appropriate */
 		.hello picture {
 			display: flex;
 			width: 100%;
 			height: 100%;
-			border: 1px solid papayawhip;
 		}
 
 	</style>

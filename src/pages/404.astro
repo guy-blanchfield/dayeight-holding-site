@@ -112,9 +112,9 @@ const graffitiBgImage = 'url(/images/graffiti-960.jpg)';
 			background-image: image-set(var(--graffitiBgImageWebp) type("image/webp"), var(--graffitiBgImage) type("image/jpeg"));
 
   			background-position: left top;
-  			background-repeat: repeat;
-			/* background-size: contain; */
-			background-size: auto 100%;
+  			background-repeat: no-repeat;
+			background-size: cover;
+			/* background-size: auto 100%; */
 			/* lets have a bg color so it doesn't look shit while the image is loading */
 			background-color: hsl(var(--accent));
 			z-index: -1;
@@ -433,4 +433,5 @@ const graffitiBgImage = 'url(/images/graffiti-960.jpg)';
 		}
 		
 	</style>
+
 </html>

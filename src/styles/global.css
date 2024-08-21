@@ -28,9 +28,16 @@ html {
 	/* --darkteal: 182 68% 23%; */
 	--darkteal: 182 68% 30%;
 
+	/* grey */
+	--midgrey: 186 10% 50%;
+	--lightgrey: 186 10% 67%;
+
 	/* applied colours */
 	--text-light: var(--white);
+	--text-mid: var(--midgrey);
+	--text-note: var(--lightgrey);
 	--text-dark: var(--darknavy);
+	--background-white: var(--white);
 	--background-light: var(--lime);
 	--background-dark: var(--navy);
 	--accent: var(--darklavender);

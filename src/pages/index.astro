@@ -75,7 +75,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				<!-- NB! default value of loading attr is lazy for the Picture component -->
 				<!-- we have to specify eager -->
 				<div class="picture-container graffiti">
-					<Picture class="hero__img picture-image picture-image--hide" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall" loading="eager">
+					<Picture class="hero__img picture-image picture-image--hide" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall" loading="eager" />
 					<!-- <Picture class="hero__img picture-image picture-image--hide" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above" loading="eager"> -->
 				</div>
 
@@ -109,7 +109,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				</div>
 
 				<div class="picture-container ocean">
-					<Picture class="hero__img picture-image picture-image--hide" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above" loading="eager">
+					<Picture class="hero__img picture-image picture-image--hide" src={oceanImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Ocean waves from above" loading="eager" />
 					<!-- <Picture class="hero__img picture-image picture-image--hide" src={graffitiImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280]} alt="Graffiti on a wall" loading="eager"> -->
 				</div>
 					
@@ -155,18 +155,45 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				</div>
 
 				<div class="hello">
-					<Picture class="contact__img picture-image picture-image--hide" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy">
+					<Picture class="contact__img picture-image picture-image--hide" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy" />
 				</div>
 
-				<div class="contact__social-links">
-					<ul class="contact__social-links-list unstyled-list">
+			</section>
+
+			
+
+			<!-- the embedded instagram posts -->
+			<section class="insta-feed">
+
+				<div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
+				
+			</section>
+
+
+            <section class="social-links">
+
+				<div class="social-links__social-links-container">
+					<ul class="social-links__social-links-list unstyled-list">
 						<li><a href="https://www.linkedin.com/company/wearedayeight/" target="_blank" rel="noopener noreferrer external nofollow" class="social-link"><Icon name="social/linkedin-icon" class="social-icon" aria-hidden="true" /><span class="visually-hidden">LinkedIn</span></a></li>
 						<li><a href="https://www.instagram.com/wearedayeight/" target="_blank" rel="noopener noreferrer external nofollow" class="social-link"><Icon name="social/insta-icon" class="social-icon" aria-hidden="true" /><span class="visually-hidden">Instagram</span></a></li>
 						<li><a href="https://twitter.com/wearedayeight" target="_blank" rel="noopener noreferrer external nofollow" class="social-link"><Icon name="social/x-icon" class="social-icon" aria-hidden="true" /><span class="visually-hidden">X (formerly Twitter)</span></a></li>
 					</ul>
 				</div>
+
 			</section>
+
 		</main>
+
+		<!-- The Javascript can be moved to the end of the html page before the </body> tag -->
+
+        <script is:inline>
+        /* curator-feed-default-feed-layout */
+            (function(){
+            var i,e,d=document,s="script";i=d.createElement("script");i.async=1;i.charset="UTF-8";
+            i.src="https://cdn.curator.io/published/5bb65eba-0d06-4d26-877f-ac12d3e5f8ee.js";
+            e=d.getElementsByTagName(s)[0];e.parentNode.insertBefore(i, e);
+            })();
+        </script>
 		
 
 	</body>
@@ -235,20 +262,14 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			background-image: var(--graffitiBgImage);
 
 			/* use image-set to specify alternative formats */
-			background-image: -webkit-image-set(
-				url("large-balloons.avif"),
-				url("large-balloons.jpg"));
-			background-image: image-set(
-				url("large-balloons.avif") type("image/avif"),
-				url("large-balloons.jpg") type("image/jpeg"));
 
 			background-image: -webkit-image-set(var(--graffitiBgImageWebp), var(--graffitiBgImage));
 			background-image: image-set(var(--graffitiBgImageWebp) type("image/webp"), var(--graffitiBgImage) type("image/jpeg"));
 
   			background-position: left top;
-  			background-repeat: repeat;
-			/* background-size: contain; */
-			background-size: auto 100%;
+  			background-repeat: no-repeat;
+			background-size: cover;
+			/* background-size: auto 100%; */
 			/* lets have a bg color so it doesn't look shit while the image is loading */
 			background-color: hsl(var(--accent));
 			z-index: -1;
@@ -354,6 +375,32 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			}
 			
 		}
+
+		.logo-and-strap__container {
+			display: flex;
+			flex-direction: column;
+			/* no gap because of the more-link, which counts as a flex item */
+			/* gap: 4rem; */
+			justify-content: center;
+			align-items: center;
+			/* padding: 5rem 0 4rem 0; */
+			padding: 4rem 0;
+			/* background-color: aqua; */
+
+			/* position here so we can position the more-link absolutely */
+			position: relative;
+
+			/* border: 1px solid fuchsia; */
+		}
+
+        /* the home page link */
+        .logo-and-strap a:focus-visible {
+            outline: none;
+        }
+
+        .logo-and-strap a:focus-visible .day-eight-logo {
+            color: hsl(var(--background-dark));
+        }
 
 		/* ----------------------- this is where a load of css disappeared from (?!!!!) ----------------------------------- */
 		/* using css from 404.astro to fill in the gap */
@@ -538,6 +585,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			background-color: hsl(var(--background-dark));
 
 			/* margin-bottom so some of the bg image shows through */
+			/* trying this on contact instead, now there's the instagram feed - nah */
 			margin-bottom: 10rem;
 		}
 
@@ -620,6 +668,8 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 		.contact {
 			background-color: hsl(var(--white));
+			/* margin-bottom so some of the bg image shows through - nah */
+			/* margin-bottom: 10rem; */
 		}
 
 		.contact > * {
@@ -637,11 +687,12 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			font-weight: normal;
 			font-size: 3rem;
 			letter-spacing: 0.05rem;
-			/* it wraps at smaller screen size (<400) 
+			/* it wraps at smaller screen size (<770) 
 			so we need smaller line-height */
-			/* line-height: 1.1; */
+			line-height: 1.1;
 			/* less line-height means we need a bit of bottom margin */
 			/* margin-bottom: 0.8rem; */
+			margin-bottom: 1rem;
 			/* nah just reduce the font-size */
 		}
 
@@ -671,7 +722,62 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			outline: none;
 		}
 
-		.contact__social-links {
+		/* social-links stuff now in separate section */
+
+		/* contact flex stuff for desktop only */
+		@media (min-width: 700px) {
+
+			.contact {
+				display: flex;
+				/* default flex-wrap is nowrap!!! */
+				flex-wrap: wrap;
+				width: 100%;
+				background-color: hsl(var(--white));
+				/* border: 3px solid magenta; */
+				/* remove margin-bottom for desktop in case we put the gap under this one */
+				margin-bottom: 0;
+			}
+			/* set flex values for the first 2 children */
+			/* (the 2 50% columns, not the social links footer) */
+			/* social-links is separate section now, so the :not() is not required */
+
+			.contact > * {
+				flex: 0 1 50%;
+				padding: 0;
+			}
+
+			.contact__heading {
+				font-size: 4rem;
+			}
+
+			.contact__img {
+				display: initial;
+			}
+
+			.hello {
+				background-color: hsl(var(--accent4));
+				/* background-image: url('/images/hello-lqip.jpg'); */
+			}
+
+			/* NB! rules for .hello picture are in the is:inline style tag below 
+			because of the way the astro Picture component works */
+
+			.hello img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.contact__email {
+				font-size: 1rem;
+			}
+
+		}
+
+
+		/* social-links is now a separate section */
+		
+		.social-links {
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -679,7 +785,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			background-color: hsl(var(--accent2));
 		}
 
-		.contact__social-links-list {
+		.social-links__social-links-list {
 			display: flex;
 			justify-content: space-evenly;
 			align-items: center;
@@ -703,46 +809,29 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			font-size: 2rem;
 		}
 
-		/* contact flex stuff for desktop only */
-		@media (min-width: 700px) {
+        /* Curator.io instagram feed stuff */
+		/* anything we want to override the curator.io styles need to go inline to get round astro's scoping
+		- see below, after this style tag */
 
-			.contact {
-				display: flex;
-				/* default flex-wrap is nowrap!!! */
-				flex-wrap: wrap;
-				width: 100%;
-				background-color: hsl(var(--white));
-				/* border: 3px solid magenta; */
-			}
-			/* set flex values for the first 2 children */
-			/* (the 2 50% columns, not the social links footer) */
-			.contact > :not(:last-child) {
-				flex: 0 1 50%;
-				padding: 0;
-			}
+		.insta-feed {
 
-			.contact__heading {
-				font-size: 4rem;
-			}
+			/* border: 1px solid fuchsia; */
+			/* padding-block: 2.5rem; */
+			/* padding on desktop only */
+			background-color: hsl(var(--background-white));
+			/* little bit of bottom padding for mobile */
+			padding-block-end: 0.5rem;
 
-			.contact__img {
-				display: initial;
-			}
+        }
 
-			.hello {
-				background-color: hsl(var(--accent4));
-				/* background-image: url('/images/hello-lqip.jpg'); */
-			}
-
-			.contact__email {
-				font-size: 1rem;
-			}
-
-			.contact__social-links {
-				flex: 1 0 100%;
-			}
-		}
-
+        /* background dark for desktop - accordion layout (white for mobile - grid layout) */
+        @media (min-width: 480px) {
+            .insta-feed {
+				/* padding on desktop only */
+				padding-block: 30px;
+                background-color: hsl(var(--background-dark));
+            }
+        }
 
 		/* -------------------------- animation timeline stuff ------------------------------ */
 
@@ -807,6 +896,60 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 					}
 				}
 			}
+		}
+
+	</style>
+
+	<!-- any style rules that we want to override the curator.io styles need to go inline to get round astro's scoping  -->
+	<style is:inline>
+
+		/* .insta-feed:is(.crt-logo, .crt-tag), */
+		.insta-feed .crt-widget.crt-widget-branded .crt-logo  {
+			/* .insta-feed .crt-logo  { */
+			font-size: 0.75rem;
+			color: hsl(var(--text-note));
+			/* background-color: hotpink; */
+            /* little bit of inline end padding for the powered by logo */
+            padding-inline-end: 2px;
+            /* mobile needs the bottom position overriding (was 5px) (curator style is position absolute) */
+            bottom: 0px;
+            
+		}
+
+        .insta-feed button.crt-load-more {
+            /* color: hsl(var(--text-dark)); */
+
+            /* matching the email button here but with its hover bgc, for more contrast */
+            color: hsl(var(--text-light));
+            background-color: hsl(var(--accent));
+            /* if you want the teal... */
+            /* background-color: hsl(var(--accent3)); */
+            padding: 0.5rem 1.5rem;
+
+            /* let's have a bit or margin bottom so the powered by logo 
+            (which is absolutely positioned to the bottom of the widget)
+            is a bit further away from the button */
+
+            margin-block-end: 1rem;
+        }
+
+        @media (min-width: 480px) {
+            /* more inline end padding for the powered by logo on desktop */
+            .insta-feed .crt-widget.crt-widget-branded .crt-logo  {
+                /* crt-feed has padding 20px block, 50px inline */
+                padding-inline-end: 50px;
+                /* put the original bottom positioning back for desktop */
+                bottom: 5px;
+            }
+        }
+
+		/* we also need rules for picture as is:inline because of the way the astro Picture component works
+		i.e. it doesn't add a data attribute to the <picture> element so scoped style won't apply to <picture>s
+		we could put this rule in global.css, but it's not really appropriate */
+		.hello picture {
+			display: flex;
+			width: 100%;
+			height: 100%;
 		}
 
 	</style>

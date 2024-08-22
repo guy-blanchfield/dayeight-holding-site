@@ -811,7 +811,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				.logo-and-strap__container {
 
 					/* animation: logo-and-strap-container-scale 2s 5s linear forwards; */
-					animation: logo-and-strap-container-scale linear forwards;
+					animation: logo-and-strap-container-scale ease-in-out forwards;
 					animation-timeline: view();
 					/* contain and 100vh have the same effect */
 					animation-range-start: contain;
@@ -826,13 +826,13 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 
 				/* let's try animating the hello and email link */
 				.contact__content {
-					animation: contact-content-scale linear forwards;
-					animation-timeline: view(20vh 20vh);
+					animation: contact-content-scale ease-in-out forwards;
+					animation-timeline: view(25vh 25vh);
 				}
 
 				@keyframes contact-content-scale {
 					50% {
-						scale: 1.25;
+						scale: 1.2;
 					}
 
 					100% {

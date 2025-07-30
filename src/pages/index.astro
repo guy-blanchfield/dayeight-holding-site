@@ -13,6 +13,8 @@ import { Icon } from "astro-icon/components"
 // https://astro-imagetools-docs.vercel.app/en/components/Picture
 import { Picture } from "astro:assets"
 
+
+
 // import Preloader from "../components/Preloader.astro";
 
 import "../styles/reset.css";
@@ -23,15 +25,20 @@ import graffitiImage from "../assets/images/graffiti-1x1-fullscale.jpg"
 import oceanImage from "../assets/images/ocean-fullscale.jpg"
 import helloImage from "../assets/images/hello-16x9-fullscale.jpg"
 
-// blur looks terrible, and lqip is hardly worth it
-// const graffitiLQIP = `url(/images/graffiti-lqip-blur.jpg)`;
-// const oceanLQIP = `url(/images/ocean-lqip-blur.jpg)`;
+// import for the client logo images is at the end of the frontmatter
+// bc it makes any following import statements error, maybe something to do with import.meta.glob
+
+
 
 // think bg image paths have to be passed into <style> as variables
 // NB going with 960 because mobile height could be up to 900+ and bg image will stretch to cover the height
 const graffitiBgImageWebp = 'url(/images/graffiti-960.webp)';
 const graffitiBgImage = 'url(/images/graffiti-960.jpg)';
 // const oceanBgImage = 'url(/images/ocean-810x810.jpg)';
+
+// blur looks terrible, and lqip is hardly worth it
+// const graffitiLQIP = `url(/images/graffiti-lqip-blur.jpg)`;
+// const oceanLQIP = `url(/images/ocean-lqip-blur.jpg)`;
 
 
 // try this if you get time
@@ -47,6 +54,23 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 // just use emailObf in any email links
 
 // const emailObfLink = `<a href="#" class="eml-protected">${emailObf}</a>`
+
+
+// yeah we definitely need this!
+import type { ImageMetadata } from 'astro';
+
+// const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/client-logos/*.{jpeg,jpg,png,gif}')
+
+// import all the client logo images (as jpg probably, then the Picture component will generate the webp and different resolutions?)
+// from: https://docs.astro.build/en/recipes/dynamically-importing-images/
+
+// for some reason the import.meta.glob has to be after any other imports or it errors!?
+const clientLogos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/client-logos/*.png');
+// we can than pass the filepath to the Picture or Image component: 
+// src={images['/src/assets/images/client-logos/client-logo-foobar.png']()}
+// because the import.meta.glob creates an object (clientLogos) whose keys are the filepaths and the values are a function that imports the file
+
+
 
 ---
 
@@ -155,6 +179,10 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				</div>
 
 				<div class="hello">
+					<!-- widths is the image widths we want astro to generate automatically,
+					 those values will also be added to the img element srcset e.g. 480w, 640w etc -->
+					<!-- sizes is what will be added to the picture or img element as attribute to tell the broswer
+					 which image to use depending on media display size -->
 					<Picture class="contact__img picture-image picture-image--hide" src={helloImage} formats={['webp', 'jpeg']} widths={[240, 540, 720, 960, 1280, 1920]} alt="Neon sign saying 'Hello'" loading="lazy" />
 				</div>
 
@@ -168,6 +196,79 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 				<div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
 				
 			</section>
+
+
+			<!-- the client logos -->
+			 <section class="clients">
+				<div class="client-logos">
+					
+					<div class="client-logo">
+						<!-- sizes={'(max-width: 700px) 125px, (max-width: 1280px) 250px, 500px'} -->
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-royalmint.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Royal Mint logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-varex.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Varex Imaging logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-cirrus.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Cirrus Research logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-noram.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Noram logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-spode.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Spode logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-aldwarkmanor.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Aldwark Manor Estates logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-contractproduction.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Contract Production logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-rolawn.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Rolawn logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-trustleeds.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Trust Leeds logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-flymo.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Flymo logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-sony.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Sony logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-fruitykitchen.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Fruity Kitchen logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-woolsofnz.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Wools of New Zealand logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-bioscapes.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="BioScapes logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-fundi.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Fundi logo" loading="lazy" />
+					</div>
+
+					<div class="client-logo">
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-husqvarna.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Husqvarna logo" loading="lazy" />
+					</div>
+				</div>
+
+			 </section>
 
 
             <section class="social-links">
@@ -741,6 +842,72 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 		}
 
 
+		/* the clients section */
+		.clients {
+			background-color: hsl(var(--background-white));
+			/* give it a bit of height for now */
+			/* min-height: 6rem; */
+			/* padding: 3rem 1rem; */
+			/* the longer logos all end up on the right, so the right needs a bit more space in mobile view */
+			padding: 3rem 2rem 3rem 1rem;
+			/* top margin for mobile so background shows through */
+			margin-block-start: 5rem;
+		}
+
+		/* the client logos wrapper div */
+		.client-logos {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 1rem;
+
+			/* border: 1px solid fuchsia; */
+		}
+
+		/* the individual client logo element divs */
+		.client-logo {
+			/* border: 1px solid aqua; */
+		}
+
+		/* client-logos stuff for desktop only */
+		@media (min-width: 700px) {
+
+			.clients {
+				margin-block-start: 0;
+				padding: 3rem;
+			}
+
+			.client-logos {
+				grid-template-columns: repeat(8, 1fr);
+				/* gap: 1rem; */
+			}
+		}
+
+
+		/* Curator.io instagram feed stuff */
+		/* anything we want to override the curator.io styles need to go inline to get round astro's scoping
+		- see below, after this style tag */
+
+		.insta-feed {
+
+			/* border: 1px solid fuchsia; */
+			/* padding-block: 2.5rem; */
+			/* padding on desktop only */
+			background-color: hsl(var(--background-white));
+			/* little bit of bottom padding for mobile */
+			padding-block-end: 0.5rem;
+
+        }
+
+        /* background dark for desktop - accordion layout (white for mobile - grid layout) */
+        @media (min-width: 480px) {
+            .insta-feed {
+				/* padding on desktop only */
+				padding-block: 30px;
+                background-color: hsl(var(--background-dark));
+            }
+        }
+
+
 		/* social-links is now a separate section */
 		
 		.social-links {
@@ -775,29 +942,7 @@ const emailObf = obfuscateEmail("hello@dayeightagency.co.uk", 156);
 			font-size: 2rem;
 		}
 
-        /* Curator.io instagram feed stuff */
-		/* anything we want to override the curator.io styles need to go inline to get round astro's scoping
-		- see below, after this style tag */
-
-		.insta-feed {
-
-			/* border: 1px solid fuchsia; */
-			/* padding-block: 2.5rem; */
-			/* padding on desktop only */
-			background-color: hsl(var(--background-white));
-			/* little bit of bottom padding for mobile */
-			padding-block-end: 0.5rem;
-
-        }
-
-        /* background dark for desktop - accordion layout (white for mobile - grid layout) */
-        @media (min-width: 480px) {
-            .insta-feed {
-				/* padding on desktop only */
-				padding-block: 30px;
-                background-color: hsl(var(--background-dark));
-            }
-        }
+        
 
 		/* -------------------------- animation timeline stuff ------------------------------ */
 

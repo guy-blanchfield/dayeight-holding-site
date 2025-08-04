@@ -66,11 +66,15 @@ import type { ImageMetadata } from 'astro';
 
 // for some reason the import.meta.glob has to be after any other imports or it errors!?
 const clientLogos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/client-logos/*.png');
-// we can than pass the filepath to the Picture or Image component: 
+// we can then pass the filepath to the Picture or Image component: 
 // src={images['/src/assets/images/client-logos/client-logo-foobar.png']()}
 // because the import.meta.glob creates an object (clientLogos) whose keys are the filepaths and the values are a function that imports the file
 
-
+// vars for sizes, widths and formats
+// formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'}
+const clientLogoSizes: string = "(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px";
+const clientLogoWidths: number[] = [125, 250, 500];
+const clientLogoFormats: string[] = ['webp', 'png'];
 
 ---
 
@@ -204,67 +208,67 @@ const clientLogos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/im
 					
 					<div class="client-logo">
 						<!-- sizes={'(max-width: 700px) 125px, (max-width: 1280px) 250px, 500px'} -->
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-royalmint.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Royal Mint logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-royalmint.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Royal Mint logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-varex.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Varex Imaging logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-varex.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Varex Imaging logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-cirrus.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Cirrus Research logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-cirrus.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Cirrus Research logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-noram.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Noram logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-noram.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Noram logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-spode.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Spode logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-spode.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Spode logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-aldwarkmanor.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Aldwark Manor Estates logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-aldwarkmanor.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Aldwark Manor Estates logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-contractproduction.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Contract Production logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-contractproduction.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Contract Production logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-rolawn.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Rolawn logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-rolawn.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Rolawn logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-trustleeds.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Trust Leeds logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-trustleeds.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Trust Leeds logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-flymo.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Flymo logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-flymo.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Flymo logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-sony.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Sony logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-sony.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Sony logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-fruitykitchen.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Fruity Kitchen logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-fruitykitchen.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Fruity Kitchen logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-woolsofnz.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Wools of New Zealand logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-woolsofnz.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Wools of New Zealand logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-bioscapes.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="BioScapes logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-bioscapes.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="BioScapes logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-fundi.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Fundi logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-fundi.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Fundi logo" loading="lazy" />
 					</div>
 
 					<div class="client-logo">
-						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-husqvarna.png']()} formats={['webp', 'png']} widths={[125, 250, 500]} sizes={'(max-width: 400px) 125px, (max-width: 699px) 250px, (max-width: 1200px) 125px, 250px'} alt="Husqvarna logo" loading="lazy" />
+						<Picture class="client-logo-picture" src={clientLogos['/src/assets/images/client-logos/client-logos-husqvarna.png']()} formats={clientLogoFormats} widths={clientLogoWidths} sizes={clientLogoSizes} alt="Husqvarna logo" loading="lazy" />
 					</div>
 				</div>
 
@@ -510,6 +514,7 @@ const clientLogos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/im
 			padding: 0 1rem;
 		}
 
+		/* the h1 */
 		.logo-and-strap__strap {
 			color: hsl(var(--text-dark));
 			font-weight: normal;
@@ -521,9 +526,15 @@ const clientLogos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/im
 			/* padding-top now, instead of gap */
 			padding-top: 4rem;
 
-			/* border: 1px solid blueviolet; */
-		}
+			/* we now have to explicitly specify margin for h1 if it's inside a <section>, <article>, <aside>, or <nav> element */
+			/* (even though it's set by the * {} in reset.css) */
+			/* see: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements#specifying_a_uniform_font_size_for_h1 */
+			margin: 0;
 
+			/* border: 1px solid blueviolet; */
+
+		}
+		
 		/* more link not required on mobile
 		this div includes the down arrow */
 		.logo-and-strap__more-link, .logo-and-strap__invisible-link {
